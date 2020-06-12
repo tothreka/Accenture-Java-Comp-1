@@ -99,7 +99,7 @@ public class Office {
         } else {
             System.out.println("Capacity must be an integer between 0 and 100.");
         }
-    };
+    }
 
     // =========== GETTERS =============
 

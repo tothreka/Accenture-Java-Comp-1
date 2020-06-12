@@ -2,13 +2,13 @@ package com.rekadanilaci.accenture;
 
 import com.rekadanilaci.accenture.domain.Employee;
 import com.rekadanilaci.accenture.domain.Office;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
+
+import java.time.LocalDate;
 
 @SpringBootTest
 class AllTest {
@@ -37,8 +37,17 @@ class AllTest {
 
 	@Test
 	void testFreeRoomWithIncreasedCapacity() {
+		Assertions.assertEquals(25, office.getFreePlaces());
 		office.setNewCapacity(50);
 		Assertions.assertEquals(125, office.getFreePlaces());
+	}
+
+	@Test
+	void registerGoodReservation() {
+		Long employeeId = 15L;
+		LocalDate date = LocalDate.now();
+		office.registerReservation(employeeId, date);
+		Assertions.assertEquals(1, office.getReservationsLists().size());
 	}
 
 }
