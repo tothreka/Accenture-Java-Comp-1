@@ -64,7 +64,7 @@ public class Office {
         return staff;
     }
 
-    public Map<LocalDate, List<Reservation>> getReservationsLists() {
+    public Map<LocalDate, DailyList> getReservationsLists() {
         return reservationsLists;
     }
 
