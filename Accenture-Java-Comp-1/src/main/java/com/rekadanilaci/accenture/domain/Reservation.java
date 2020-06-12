@@ -46,4 +46,11 @@ public class Reservation {
     public ReservationStatus getReservationStatus() {
         return reservationStatus;
     }
+
+    //================== SETTERS =================
+
+
+    public void setReservationStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
+    }
 }

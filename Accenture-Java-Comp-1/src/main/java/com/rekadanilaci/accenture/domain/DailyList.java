@@ -49,6 +49,15 @@ public class DailyList {
         return isCreated;
     }
 
+    public void enterOffice(Long employeeId) {
+        for (Reservation reservation : reservationList) {
+            if (reservation.getEmployee().getId() == employeeId &&
+                    reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
+                reservation.setReservationStatus(ReservationStatus.ENTERED_OFFICE);
+            }
+        }
+    }
+
 
     //========================= GETTERS =========================
 
