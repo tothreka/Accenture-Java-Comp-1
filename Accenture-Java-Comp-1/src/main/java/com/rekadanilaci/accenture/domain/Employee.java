@@ -23,4 +23,7 @@ public class Employee {
     public Employee(EmployeeDto employeeDto) {
         this.name = employeeDto.getName();
     }
+
+    public Employee() {
+    }
 }

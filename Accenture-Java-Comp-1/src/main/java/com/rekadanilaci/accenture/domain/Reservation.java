@@ -26,4 +26,7 @@ public class Reservation {
         this.day = day;
         this.active = ReservationStatus.ENROLLED;
     }
+    //TODO a serviceben kell megcsinálni a logikát
+
+
 }
