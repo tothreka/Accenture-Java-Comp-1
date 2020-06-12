@@ -1,4 +1,4 @@
-package com.rekadanilaci.Accenture.dto;
+package com.rekadanilaci.accenture.dto;
 
 import java.time.LocalDate;
 

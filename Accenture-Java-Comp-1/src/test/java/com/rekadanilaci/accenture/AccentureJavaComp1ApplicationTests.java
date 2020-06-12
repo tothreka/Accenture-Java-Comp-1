@@ -1,4 +1,4 @@
-package com.rekadanilaci.Accenture;
+package com.rekadanilaci.accenture;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
