@@ -1,6 +1,6 @@
-package com.rekadanilaci.Accenture;
+package com.rekadanilaci.accenture;
 
-import com.rekadanilaci.Accenture.domain.Office;
+import com.rekadanilaci.accenture.domain.Office;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,4 +1,4 @@
-package com.rekadanilaci.Accenture.domain;
+package com.rekadanilaci.accenture.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

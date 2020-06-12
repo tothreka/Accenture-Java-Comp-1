@@ -1,6 +1,4 @@
-package com.rekadanilaci.Accenture.domain;
-
-import com.rekadanilaci.Accenture.dto.ReservationDto;
+package com.rekadanilaci.accenture.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,9 +21,12 @@ public class Reservation {
     @Column(name = "status")
     private ReservationStatus active;
 
-    public Reservation(ReservationDto reservationDto) {
-        this.person = reservationDto.getPerson();
-        this.day = reservationDto.getDay();
-        this.active = reservationDto.getStatus();
+    public Reservation(Employee person, LocalDate day) {
+        this.person = person;
+        this.day = day;
+        this.active = ReservationStatus.ENROLLED;
     }
+    //TODO a serviceben kell megcsinálni a logikát blablabla
+
+
 }

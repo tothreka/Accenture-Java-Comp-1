@@ -1,6 +1,6 @@
-package com.rekadanilaci.Accenture.domain;
+package com.rekadanilaci.accenture.domain;
 
-import com.rekadanilaci.Accenture.dto.EmployeeDto;
+import com.rekadanilaci.accenture.dto.EmployeeDto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,5 +22,8 @@ public class Employee {
 
     public Employee(EmployeeDto employeeDto) {
         this.name = employeeDto.getName();
+    }
+
+    public Employee() {
     }
 }
