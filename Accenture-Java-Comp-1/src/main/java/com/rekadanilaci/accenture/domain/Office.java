@@ -22,6 +22,8 @@ public class Office {
         this.reservationsLists = new HashMap<>();
     }
 
+    // ========== REGISTER ENDPOINT ===========
+
     public String registerReservation(Long employeeID, LocalDate day) {
         Employee employee = findEmployeeInStaff(employeeID);
         if (employee == null) {
@@ -46,11 +48,24 @@ public class Office {
         return null;
     }
 
+    // =========== STATUS ENDPOINT ===========
+
+    public String reportStatus (Long employeeID, LocalDate day) {
+        return "";
+    }
+
+    // =========== ENTRY ENDPOINT ===========
+
+    // =========== EXIT ENDPOINT ===========
+
+
+    // =========== GENERAL METHODS ===========
+
     public void setNewCapacity(Integer capacity) {
         if (0 <= capacity && capacity <= 100) {
             this.capacity = capacity;
         } else {
-
+            System.out.println("Capacity must be an integer between 0 and 100.");
         }
     };
 

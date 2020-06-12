@@ -37,6 +37,7 @@ public class DailyList {
     }
 
     public void addReservation(Reservation reservation) {
+        // TODO ellenőrizni, nincs e már aktív foglalása erre a napra
         this.reservationList.add(reservation);
     }
 
