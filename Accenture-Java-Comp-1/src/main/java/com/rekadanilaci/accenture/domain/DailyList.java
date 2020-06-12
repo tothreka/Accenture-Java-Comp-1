@@ -42,9 +42,10 @@ public class DailyList {
             if (currentReservation.getEmployee().equals(reservation.getEmployee()) &&
             !currentReservation.getReservationStatus().equals(ReservationStatus.LEFT_OFFICE)) {
                 isCreated = false;
-            } else {
-                this.reservationList.add(reservation);
             }
+        }
+        if (isCreated == true) {
+            reservationList.add(reservation);
         }
         return isCreated;
     }
