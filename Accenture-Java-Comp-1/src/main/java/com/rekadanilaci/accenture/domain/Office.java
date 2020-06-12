@@ -1,12 +1,16 @@
 package com.rekadanilaci.accenture.domain;
 
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Office {
+    private static Logger logger = (Logger) LoggerFactory.getLogger("OfficeLogger");
 
     private final Integer PLACES = 250;
 
@@ -24,21 +28,21 @@ public class Office {
 
     // ========== REGISTER ENDPOINT ===========
 
-    public String registerReservation(Long employeeID, LocalDate day) {
+    public void registerReservation(Long employeeID, LocalDate day) {
         Employee employee = findEmployeeInStaff(employeeID);
         if (employee == null) {
-            return "Invalid ID, no reservation was created.";
+            logger.warning("Invalid ID, no reservation was created.");
         }
         if (day.compareTo(LocalDate.now()) < 0) {
-            return "Invalid day, no reservation was created.";
+            logger.warning("Invalid day, no reservation was created.");
         } //Assumption: Weekend days are valid as well.
         if (!reservationsLists.containsKey(day)) {
             reservationsLists.put(day, new DailyList());
         }
         if (reservationsLists.get(day).addReservation(new Reservation(employee, day))) {
-            return "Your reservation was created.";
+            logger.info("Your reservation was created.");
         } else {
-            return "Your reservation was not created, you have already reservations for this day.";
+            logger.info("Your reservation was not created, you already have reservations for this day.");
         }
     }
 
