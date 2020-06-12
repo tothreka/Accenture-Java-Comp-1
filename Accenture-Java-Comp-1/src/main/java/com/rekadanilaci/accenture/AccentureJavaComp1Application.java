@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AccentureJavaComp1Application {
 
     public static void main(String[] args) { SpringApplication.run(AccentureJavaComp1Application.class, args);
-        Office office = new Office(250, 10);
+        Office office = new Office();
+        office.setCapacity(10);
     }
 
 }
