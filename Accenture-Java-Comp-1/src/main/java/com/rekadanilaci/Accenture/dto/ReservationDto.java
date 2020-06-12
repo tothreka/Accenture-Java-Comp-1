@@ -5,12 +5,10 @@ import java.time.LocalDate;
 public class ReservationDto {
     private Long person;
     private LocalDate day;
-    private String status;
 
-    public ReservationDto(Long person, LocalDate day, String status) {
+    public ReservationDto(Long person, LocalDate day) {
         this.person = person;
         this.day = day;
-        this.status = status;
     }
 
     public Long getPerson() {
@@ -21,7 +19,4 @@ public class ReservationDto {
         return day;
     }
 
-    public String getStatus() {
-        return status;
-    }
 }
