@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Employee {
     private String name;
 
     @OneToMany(mappedBy = "employee")
-    @Column(name = "reservations")
+    @Column(name = "reservationList")
     private List<Reservation> reservationList;
 
     public Employee(EmployeeDto employeeDto) {

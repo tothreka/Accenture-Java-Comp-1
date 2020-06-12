@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "reservations")
+@Table(name = "reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Reservation {
     @ManyToOne
     private LocalDate day;
 
-    @Column(name = "status")
+    @Column(name = "active")
     private ReservationStatus active;
 
     public Reservation(Employee employee, LocalDate day) {
