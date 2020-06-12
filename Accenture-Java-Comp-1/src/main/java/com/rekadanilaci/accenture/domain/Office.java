@@ -40,7 +40,6 @@ public class Office {
         } else {
             return "Your reservation was not created, you have already reservations for this day.";
         }
-
     }
 
     public Employee findEmployeeInStaff(Long employeeID) {
@@ -76,11 +75,20 @@ public class Office {
         DailyList todayList = reservationsLists.get(LocalDate.now());
         if (todayList == null || todayList.getPositionInEnrollList(employeeID, freePlaces) >= 0) {
             return false;
+        } else {
+            todayList.enterOffice(employeeID);
+            return true;
         }
-        return true;
     }
 
     // =========== EXIT ENDPOINT ===========
+
+    public void exit(Long employeeID) {
+        DailyList todayList = reservationsLists.get(LocalDate.now());
+        todayList.exitOffice(employeeID);
+    }
+
+
 
 
     // =========== GENERAL METHODS ===========
