@@ -36,9 +36,17 @@ public class DailyList {
         return position;
     }
 
-    public void addReservation(Reservation reservation) {
-        // TODO ellenőrizni, nincs e már aktív foglalása erre a napra
-        this.reservationList.add(reservation);
+    public boolean addReservation(Reservation reservation) {
+        boolean isCreated = true;
+        for (Reservation currentReservation : reservationList) {
+            if (currentReservation.getEmployee().equals(reservation.getEmployee()) &&
+            !currentReservation.getReservationStatus().equals(ReservationStatus.LEFT_OFFICE)) {
+                isCreated = false;
+            } else {
+                this.reservationList.add(reservation);
+            }
+        }
+        return isCreated;
     }
 
 
