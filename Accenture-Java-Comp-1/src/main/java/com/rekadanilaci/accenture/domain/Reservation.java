@@ -27,7 +27,6 @@ public class Reservation {
         this.day = day;
         this.reservationStatus = ReservationStatus.ENROLLED;
     }
-    //TODO a serviceben kell megcsinálni a logikát blablabla
 
 
     // ======================= GETTERS =====================
