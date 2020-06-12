@@ -42,6 +42,11 @@ public class OfficeService {
     }
 
 
+    public boolean checkEntryRequest(Long employeeId) {
+        boolean canEntry = office.requestEntry(employeeId);
+        return canEntry;
+    }
+
     // =========== GENERAL METHODS ===========
 
     private void saveReservationToDatabase(Employee employee, LocalDate day) {

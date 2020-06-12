@@ -27,4 +27,10 @@ public class OfficeController {
         String status = officeService.requestStatus(employeeId);
         return new ResponseEntity(status, HttpStatus.OK);
     }
+
+    @GetMapping("/entryrequest")
+    public ResponseEntity requestEntry(@PathVariable Long employeeId) {
+        boolean canEntry = officeService.checkEntryRequest(employeeId);
+        return new ResponseEntity(canEntry, HttpStatus.OK);
+    }
 }
