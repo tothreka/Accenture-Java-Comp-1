@@ -35,8 +35,12 @@ public class Office {
         if (!reservationsLists.containsKey(day)) {
             reservationsLists.put(day, new DailyList());
         }
-        reservationsLists.get(day).addReservation(new Reservation(employee, day));
-        return "Your reservation was created.";
+        if (reservationsLists.get(day).addReservation(new Reservation(employee, day))) {
+            return "Your reservation was created.";
+        } else {
+            return "Your reservation was not created, you have already reservations for this day.";
+        }
+
     }
 
     public Employee findEmployeeInStaff(Long employeeID) {
@@ -56,7 +60,7 @@ public class Office {
             answer = "There are no reservations for this day.";
         } else {
             int position = reservationsLists.get(day).getPositionInEnrollList(employeeID, freePlaces);
-            answer = position < 1 ? "You can enter the office, there is free place." :
+            answer = position < 0 ? "You can enter the office, there is free place." :
                     "You are in the position " + (position + 1) + " now in the waiting list for the given day.";
         }
         Employee employee = findEmployeeInStaff(employeeID);
