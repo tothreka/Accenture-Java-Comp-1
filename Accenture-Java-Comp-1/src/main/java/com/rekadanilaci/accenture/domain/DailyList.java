@@ -27,16 +27,18 @@ public class DailyList {
     }
 
     public int getPositionInEnrollList(int employeeId, int officeFreePlaces) {
-        int enrolledAndEnteredEmployees = 0;
+        int enrolledEmployees = 0;
+        int enteredEmployees = 0;
         for (Reservation reservation : reservationList) {
             if (reservation.getEmployee().getId() == employeeId) {
                 break;
-            } else if (reservation.getReservationStatus().equals(ReservationStatus.ENROLLED) ||
-                    reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
-                enrolledAndEnteredEmployees++;
+            } else if (reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
+                enrolledEmployees++;
+            } else if (reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
+                enteredEmployees++;
             }
         }
-        int position = enrolledAndEnteredEmployees - officeFreePlaces;
+        int position = enrolledEmployees - (officeFreePlaces - enteredEmployees);
         return position;
     }
 
