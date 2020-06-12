@@ -51,7 +51,19 @@ public class Office {
     // =========== STATUS ENDPOINT ===========
 
     public String reportStatus (Long employeeID, LocalDate day) {
-        return "";
+        String answer = "";
+        if (!reservationsLists.containsKey(day)) {
+            answer = "There are no reservations for this day.";
+        } else {
+            int position = reservationsLists.get(day).getPositionInEnrollList(employeeID, freePlaces);
+            answer = position < 1 ? "You can enter the office, there is free place." :
+                    "You are in the position " + position + " now in the waiting list.";
+        }
+        Employee employee = findEmployeeInStaff(employeeID);
+        if (employee == null) {
+            answer = "Invalid ID, we can not present a valid status.";
+        }
+        return answer;
     }
 
     // =========== ENTRY ENDPOINT ===========
