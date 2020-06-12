@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class Office {
 
-    private Long id;
     private final Integer PLACES = 250;
     private Integer capacity;
     private Integer freePlaces;
@@ -44,7 +43,7 @@ public class Office {
 
     public Employee findEmployeeInStaff(Long employeeID) {
         for (Employee employee : staff) {
-            if (employee.getId() == employeeID) {
+            if (employee.getId().equals(employeeID)) {
                 return employee;
             }
         }
