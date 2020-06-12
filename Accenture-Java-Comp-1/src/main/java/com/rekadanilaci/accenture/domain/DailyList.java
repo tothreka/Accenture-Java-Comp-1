@@ -42,7 +42,7 @@ public class DailyList {
         return position;
     }
 
-    public void addreservation(Reservation reservation) {
+    public void addReservation(Reservation reservation) {
         this.reservationList.add(reservation);
     }
 
