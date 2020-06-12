@@ -96,6 +96,7 @@ public class Office {
     public void setNewCapacity(Integer capacity) {
         if (0 <= capacity && capacity <= 100) {
             this.capacity = capacity;
+            this.freePlaces = PLACES * capacity / 100;
         } else {
             System.out.println("Capacity must be an integer between 0 and 100.");
         }
