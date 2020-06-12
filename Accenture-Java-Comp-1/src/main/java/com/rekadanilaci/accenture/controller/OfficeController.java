@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/api/office")
+@RestController
+@RequestMapping(("/api/office"))
 public class OfficeController {
     private OfficeService officeService;
 

@@ -1,16 +1,18 @@
 package com.rekadanilaci.accenture.domain;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
+@Component
 public class Office {
-    private static Logger logger = (Logger) LoggerFactory.getLogger("OfficeLogger");
+    private static final Logger logger = LoggerFactory.getLogger(Office.class);
 
     private final Integer PLACES = 250;
 
@@ -31,10 +33,10 @@ public class Office {
     public void registerReservation(Long employeeID, LocalDate day) {
         Employee employee = findEmployeeInStaff(employeeID);
         if (employee == null) {
-            logger.warning("Invalid ID, no reservation was created.");
+            logger.warn("Invalid ID, no reservation was created.");
         }
         if (day.compareTo(LocalDate.now()) < 0) {
-            logger.warning("Invalid day, no reservation was created.");
+            logger.warn("Invalid day, no reservation was created.");
         } //Assumption: Weekend days are valid as well.
         if (!reservationsLists.containsKey(day)) {
             reservationsLists.put(day, new DailyList());
