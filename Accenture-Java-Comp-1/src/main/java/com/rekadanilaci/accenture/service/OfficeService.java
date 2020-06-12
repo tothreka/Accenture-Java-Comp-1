@@ -7,9 +7,13 @@ import com.rekadanilaci.accenture.dto.ReservationDto;
 import com.rekadanilaci.accenture.repository.EmployeeRepository;
 import com.rekadanilaci.accenture.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
+@Service
+@Transactional
 public class OfficeService {
     private EmployeeRepository employeeRepository;
     private ReservationRepository reservationRepository;
