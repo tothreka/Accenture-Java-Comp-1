@@ -15,6 +15,9 @@ public class DailyList {
     @OneToMany(mappedBy = "dailyList", fetch = FetchType.EAGER)
     private List<Reservation> reservationList;
 
+    public DailyList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
+    }
 
     public DailyList() {
     }

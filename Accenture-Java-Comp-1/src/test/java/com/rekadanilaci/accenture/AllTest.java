@@ -18,15 +18,13 @@ class AllTest {
     void makeEmployees() {
         office.getStaff().clear();
         for (int i = 1; i <= 300; i++) {
-            office.addEmployee(new Employee("Employee" + i));
+            Employee employee = new Employee();
+            employee.setId((long) i);
+            employee.setName("Employee" + i);
+            office.addEmployee(employee);
         }
         office.setNewCapacity(10);
     }
-
-/*	@BeforeEach
-	void setCapacityBackTo10() {
-		office.setNewCapacity(10);
-	}*/
 
     @Test
     void testSetNewCapacity() {

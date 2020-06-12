@@ -30,21 +30,25 @@ public class Office {
 
     // ========== REGISTER ENDPOINT ===========
 
-    public void registerReservation(Long employeeID, LocalDate day) {
+    public String registerReservation(Long employeeID, LocalDate day) {
         Employee employee = findEmployeeInStaff(employeeID);
         if (employee == null) {
             logger.warn("Invalid ID, no reservation was created.");
+            return "Invalid ID, no reservation was created.";
         }
         if (day.compareTo(LocalDate.now()) < 0) {
             logger.warn("Invalid day, no reservation was created.");
+            return "Invalid day, no reservation was created.";
         } //Assumption: Weekend days are valid as well.
         if (!reservationsLists.containsKey(day)) {
             reservationsLists.put(day, new DailyList());
         }
         if (reservationsLists.get(day).addReservation(new Reservation(employee, day))) {
             logger.info("Your reservation was created.");
+            return "Your reservation was created.";
         } else {
             logger.info("Your reservation was not created, you already have reservations for this day.");
+            return "Your reservation was not created, you already have reservations for this day.";
         }
     }
 
