@@ -59,6 +59,15 @@ public class DailyList {
         }
     }
 
+    public void exitOffice(Long employeeId) {
+        for (Reservation reservation : reservationList) {
+            if (reservation.getEmployee().getId() == employeeId &&
+                    reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
+                reservation.setReservationStatus(ReservationStatus.LEFT_OFFICE);
+            }
+        }
+    }
+
 
     //========================= GETTERS =========================
 
