@@ -57,7 +57,7 @@ public class Office {
         } else {
             int position = reservationsLists.get(day).getPositionInEnrollList(employeeID, freePlaces);
             answer = position < 1 ? "You can enter the office, there is free place." :
-                    "You are in the position " + position + " now in the waiting list.";
+                    "You are in the position " + (position + 1) + " now in the waiting list for the given day.";
         }
         Employee employee = findEmployeeInStaff(employeeID);
         if (employee == null) {
@@ -67,6 +67,14 @@ public class Office {
     }
 
     // =========== ENTRY ENDPOINT ===========
+
+    public boolean requestEntry (Long employeeID) {
+        DailyList todayList = reservationsLists.get(LocalDate.now());
+        if (todayList == null || todayList.getPositionInEnrollList(employeeID, freePlaces) >= 0) {
+            return false;
+        }
+        return true;
+    }
 
     // =========== EXIT ENDPOINT ===========
 
