@@ -24,6 +24,11 @@ public class Employee {
         this.name = employeeDto.getName();
     }
 
+    public Employee(String name) {
+        //For test purposes
+        this.name = name;
+    }
+
     public Employee() {
     }
 
