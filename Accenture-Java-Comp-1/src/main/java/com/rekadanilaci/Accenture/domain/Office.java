@@ -6,12 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class Office {
 
+
+    private Long id;
+
     private Integer PLACES;
+
     private Integer capacity;
+
     private Integer freePlaces;
+
     private List<Employee> staff;
+
     private Map <LocalDate, List<Reservation>> reservationsLists;
 
     public Office(Integer PLACES, Integer capacity) {
@@ -22,5 +30,6 @@ public class Office {
         this.reservationsLists = new HashMap<>();
     }
 
-
+    public Office() {
+    }
 }
