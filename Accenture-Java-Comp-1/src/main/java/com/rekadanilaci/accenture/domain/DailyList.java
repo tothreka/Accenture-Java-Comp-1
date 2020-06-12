@@ -17,12 +17,6 @@ public class DailyList {
     @OneToMany(mappedBy = "day")
     private List<Reservation> reservationList;
 
-    public DailyList(Reservation reservation) {
-        List<Reservation> reservationList = new ArrayList<>();
-        reservationList.add(reservation);
-        this.reservationList = reservationList;
-    }
-
     public DailyList() {
     }
 
