@@ -42,6 +42,10 @@ public class DailyList {
         return position;
     }
 
+    public void addreservation(Reservation reservation) {
+        this.reservationList.add(reservation);
+    }
+
 
     //========================= GETTERS =========================
 
