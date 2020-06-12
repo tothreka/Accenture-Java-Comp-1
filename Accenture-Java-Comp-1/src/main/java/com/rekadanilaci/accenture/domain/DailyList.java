@@ -12,7 +12,6 @@ public class DailyList {
     @Column(name = "id")
     private Long id;
 
-    // @Column(name = "reservationList")
     @OneToMany(mappedBy = "dailyList", fetch = FetchType.EAGER)
     private List<Reservation> reservationList;
 
@@ -24,7 +23,7 @@ public class DailyList {
         int enrolledEmployees = 0;
         int enteredEmployees = 0;
         for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId() == employeeId) {
+            if (reservation.getEmployee().getId().equals(employeeId)) {
                 break;
             } else if (reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
                 enrolledEmployees++;
@@ -32,8 +31,7 @@ public class DailyList {
                 enteredEmployees++;
             }
         }
-        int position = enrolledEmployees - (officeFreePlaces - enteredEmployees);
-        return position;
+        return enrolledEmployees - (officeFreePlaces - enteredEmployees);
     }
 
     public boolean addReservation(Reservation reservation) {
@@ -44,7 +42,7 @@ public class DailyList {
                 isCreated = false;
             }
         }
-        if (isCreated == true) {
+        if (isCreated) {
             reservationList.add(reservation);
         }
         return isCreated;
@@ -52,7 +50,7 @@ public class DailyList {
 
     public void enterOffice(Long employeeId) {
         for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId() == employeeId &&
+            if (reservation.getEmployee().getId().equals(employeeId) &&
                     reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
                 reservation.setReservationStatus(ReservationStatus.ENTERED_OFFICE);
             }
@@ -61,7 +59,7 @@ public class DailyList {
 
     public void exitOffice(Long employeeId) {
         for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId() == employeeId &&
+            if (reservation.getEmployee().getId().equals(employeeId) &&
                     reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
                 reservation.setReservationStatus(ReservationStatus.LEFT_OFFICE);
             }
