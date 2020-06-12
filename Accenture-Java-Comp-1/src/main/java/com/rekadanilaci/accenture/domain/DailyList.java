@@ -20,7 +20,7 @@ public class DailyList {
     public DailyList() {
     }
 
-    public int getPositionInEnrollList(int employeeId, int officeFreePlaces) {
+    public int getPositionInEnrollList(Long employeeId, int officeFreePlaces) {
         int enrolledEmployees = 0;
         int enteredEmployees = 0;
         for (Reservation reservation : reservationList) {
