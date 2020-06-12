@@ -47,6 +47,10 @@ public class OfficeService {
         return canEntry;
     }
 
+    public void exitOffice(Long employeeId) {
+        office.exit(employeeId);
+    }
+
     // =========== GENERAL METHODS ===========
 
     private void saveReservationToDatabase(Employee employee, LocalDate day) {

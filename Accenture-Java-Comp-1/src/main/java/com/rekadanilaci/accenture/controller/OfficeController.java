@@ -33,4 +33,10 @@ public class OfficeController {
         boolean canEntry = officeService.checkEntryRequest(employeeId);
         return new ResponseEntity(canEntry, HttpStatus.OK);
     }
+
+    @PutMapping("/{id}/")
+    public ResponseEntity exitOffice(@PathVariable Long id) {
+        officeService.exitOffice(id);
+        return new ResponseEntity(HttpStatus.valueOf("EXIT"));
+    }
 }
