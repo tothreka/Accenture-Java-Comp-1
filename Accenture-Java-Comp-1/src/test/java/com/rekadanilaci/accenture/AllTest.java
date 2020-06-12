@@ -37,7 +37,6 @@ class AllTest {
 
 	@Test
 	void testFreeRoomWithIncreasedCapacity() {
-		Assertions.assertEquals(25, office.getFreePlaces());
 		office.setNewCapacity(50);
 		Assertions.assertEquals(125, office.getFreePlaces());
 	}

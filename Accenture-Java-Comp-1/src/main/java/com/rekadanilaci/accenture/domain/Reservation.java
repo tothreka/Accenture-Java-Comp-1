@@ -12,15 +12,16 @@ public class Reservation {
     private Long id;
 
     @ManyToOne
-    // @Column(name = "employee")
     private Employee employee;
 
-    //@Column(name = "day")
-    @ManyToOne
+    @Column(name = "day")
     private LocalDate day;
 
     @Column(name = "reservationStatus")
     private ReservationStatus reservationStatus;
+
+    @ManyToOne
+    private DailyList dailyList;
 
     public Reservation(Employee employee, LocalDate day) {
         this.employee = employee;

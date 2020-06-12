@@ -1,7 +1,6 @@
 package com.rekadanilaci.accenture.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,11 +12,10 @@ public class DailyList {
     @Column(name = "id")
     private Long id;
 
-    private
-
     // @Column(name = "reservationList")
     @OneToMany(mappedBy = "dailyList", fetch = FetchType.EAGER)
     private List<Reservation> reservationList;
+
 
     public DailyList() {
     }
