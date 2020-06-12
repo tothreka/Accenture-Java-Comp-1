@@ -9,6 +9,7 @@ import java.util.Map;
 public class Office {
 
     private final Integer PLACES = 250;
+
     private Integer capacity;
     private Integer freePlaces;
     private List<Employee> staff;
