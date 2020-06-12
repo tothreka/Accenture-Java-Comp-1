@@ -5,9 +5,7 @@ import com.rekadanilaci.accenture.service.OfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("/api/office")
 public class OfficeController {
@@ -22,5 +20,11 @@ public class OfficeController {
     public ResponseEntity addReservation(@RequestBody ReservationDto reservationDto) {
         officeService.createReservation(reservationDto);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity getStatus(@PathVariable Long employeeId) {
+        String status = officeService.requestStatus(employeeId);
+        return new ResponseEntity(status, HttpStatus.OK);
     }
 }

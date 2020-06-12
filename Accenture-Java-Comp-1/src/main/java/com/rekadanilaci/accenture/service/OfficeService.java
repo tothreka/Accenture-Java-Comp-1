@@ -35,6 +35,15 @@ public class OfficeService {
         office.registerReservation(employeeId, day);
     }
 
+
+    public String requestStatus(Long employeeId) {
+        String status = office.reportStatus(employeeId, LocalDate.now());
+        return status;
+    }
+
+
+    // =========== GENERAL METHODS ===========
+
     private void saveReservationToDatabase(Employee employee, LocalDate day) {
         Reservation newReservation = new Reservation(employee, day);
         reservationRepository.save(newReservation);

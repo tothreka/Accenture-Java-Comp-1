@@ -17,7 +17,7 @@ public class Office {
     private Integer capacity;
     private Integer freePlaces;
     private List<Employee> staff;
-    private Map <LocalDate, DailyList> reservationsLists;
+    private Map<LocalDate, DailyList> reservationsLists;
 
     public Office() {
         this.capacity = 100;
@@ -57,7 +57,7 @@ public class Office {
 
     // =========== STATUS ENDPOINT ===========
 
-    public String reportStatus (Long employeeID, LocalDate day) {
+    public String reportStatus(Long employeeID, LocalDate day) {
         String answer = "";
         if (!reservationsLists.containsKey(day)) {
             answer = "There are no reservations for this day.";
@@ -75,7 +75,7 @@ public class Office {
 
     // =========== ENTRY ENDPOINT ===========
 
-    public boolean requestEntry (Long employeeID) {
+    public boolean requestEntry(Long employeeID) {
         DailyList todayList = reservationsLists.get(LocalDate.now());
         if (todayList == null || todayList.getPositionInEnrollList(employeeID, freePlaces) >= 0) {
             return false;
@@ -91,8 +91,6 @@ public class Office {
         DailyList todayList = reservationsLists.get(LocalDate.now());
         todayList.exitOffice(employeeID);
     }
-
-
 
 
     // =========== GENERAL METHODS ===========
