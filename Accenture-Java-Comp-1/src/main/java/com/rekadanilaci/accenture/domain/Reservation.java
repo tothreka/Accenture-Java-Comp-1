@@ -19,13 +19,13 @@ public class Reservation {
     @ManyToOne
     private LocalDate day;
 
-    @Column(name = "active")
-    private ReservationStatus active;
+    @Column(name = "reservationStatus")
+    private ReservationStatus reservationStatus;
 
     public Reservation(Employee employee, LocalDate day) {
         this.employee = employee;
         this.day = day;
-        this.active = ReservationStatus.ENROLLED;
+        this.reservationStatus = ReservationStatus.ENROLLED;
     }
     //TODO a serviceben kell megcsinálni a logikát blablabla
 
@@ -44,7 +44,7 @@ public class Reservation {
         return day;
     }
 
-    public ReservationStatus getActive() {
-        return active;
+    public ReservationStatus getReservationStatus() {
+        return reservationStatus;
     }
 }

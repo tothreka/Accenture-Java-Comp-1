@@ -26,6 +26,20 @@ public class DailyList {
     public DailyList() {
     }
 
+    public int getPositionInEnrollList(int employeeId, int officeFreePlaces) {
+        int enrolledAndEnteredEmployees = 0;
+        for (Reservation reservation : reservationList) {
+            if (reservation.getEmployee().getId() == employeeId) {
+                break;
+            } else if (reservation.getReservationStatus().equals(ReservationStatus.ENROLLED) ||
+                    reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
+                enrolledAndEnteredEmployees++;
+            }
+        }
+        int position = enrolledAndEnteredEmployees - officeFreePlaces;
+        return position;
+    }
+
 
     //========================= GETTERS =========================
 
