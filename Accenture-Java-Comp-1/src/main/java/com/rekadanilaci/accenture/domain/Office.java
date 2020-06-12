@@ -102,6 +102,10 @@ public class Office {
         }
     }
 
+    public void addEmployee(Employee employee) {
+        staff.add(employee);
+    }
+
     // =========== GETTERS =============
 
     public Integer getPLACES() {

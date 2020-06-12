@@ -19,7 +19,7 @@ class AllTest {
 	void makeEmployees() {
 		office.getStaff().clear();
 		for (int i = 1; i <= 300; i++) {
-			office.getStaff().add(new Employee("Employee" + i));
+			office.addEmployee(new Employee("Employee" + i));
 		}
 		office.setNewCapacity(10);
 	}
@@ -44,7 +44,7 @@ class AllTest {
 
 	@Test
 	void registerGoodReservation() {
-		Long employeeId = 15L;
+		Long employeeId = office.getStaff().get(15).getId();
 		LocalDate date = LocalDate.now();
 		office.registerReservation(employeeId, date);
 		Assertions.assertEquals(1, office.getReservationsLists().size());
