@@ -11,22 +11,38 @@ public class Reservation {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany
+    @ManyToOne
     @Column(name = "employee")
-    private Employee person;
+    private Employee employee;
 
     @Column(name = "day")
+    @ManyToOne
     private LocalDate day;
 
     @Column(name = "status")
     private ReservationStatus active;
 
-    public Reservation(Employee person, LocalDate day) {
-        this.person = person;
+    public Reservation(Employee employee, LocalDate day) {
+        this.employee = employee;
         this.day = day;
         this.active = ReservationStatus.ENROLLED;
     }
     //TODO a serviceben kell megcsinálni a logikát blablabla
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public LocalDate getDay() {
+        return day;
+    }
+
+    public ReservationStatus getActive() {
+        return active;
+    }
 }

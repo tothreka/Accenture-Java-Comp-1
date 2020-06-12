@@ -1,39 +1,33 @@
 package com.rekadanilaci.accenture.domain;
 
-import com.rekadanilaci.accenture.dto.EmployeeDto;
-
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "employees")
-public class Employee {
+@Table(name = "dailyList")
+public class DailyList {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @OneToMany(mappedBy = "employee")
-    @Column(name = "reservations")
+    @Column(name = "reservationList")
+    @OneToMany(mappedBy = "day")
     private List<Reservation> reservationList;
 
-    public Employee(EmployeeDto employeeDto) {
-        this.name = employeeDto.getName();
+    public DailyList(Reservation reservation) {
+        List<Reservation> reservationList = new ArrayList<>();
+        reservationList.add(reservation);
+        this.reservationList = reservationList;
     }
 
-    public Employee() {
+    public DailyList() {
     }
-
 
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public List<Reservation> getReservationList() {
