@@ -13,8 +13,10 @@ public class DailyList {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "reservationList")
-    @OneToMany(mappedBy = "day")
+    private
+
+    // @Column(name = "reservationList")
+    @OneToMany(mappedBy = "dailyList", fetch = FetchType.EAGER)
     private List<Reservation> reservationList;
 
     public DailyList() {

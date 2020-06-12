@@ -16,8 +16,7 @@ public class Employee {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "employee")
-    @Column(name = "reservationList")
+    @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
     private List<Reservation> reservationList;
 
     public Employee(EmployeeDto employeeDto) {

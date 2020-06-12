@@ -12,10 +12,10 @@ public class Reservation {
     private Long id;
 
     @ManyToOne
-    @Column(name = "employee")
+    // @Column(name = "employee")
     private Employee employee;
 
-    @Column(name = "day")
+    //@Column(name = "day")
     @ManyToOne
     private LocalDate day;
 
