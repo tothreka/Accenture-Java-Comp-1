@@ -46,6 +46,14 @@ public class Office {
         return null;
     }
 
+    public void setNewCapacity(Integer capacity) {
+        if (0 <= capacity && capacity <= 100) {
+            this.capacity = capacity;
+        } else {
+
+        }
+    };
+
     // =========== GETTERS =============
 
     public Integer getPLACES() {
@@ -68,10 +76,4 @@ public class Office {
         return reservationsLists;
     }
 
-    // =========== SETTERS =============
-
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
 }
