@@ -24,5 +24,6 @@ public class OfficeService {
         LocalDate day = reservationDto.getDay();
         Reservation newReservation = new Reservation(employee, day);
         reservationRepository.save(newReservation);
+        //TODO ideiglenes, amíg az office osztály nincs kész
     }
 }
