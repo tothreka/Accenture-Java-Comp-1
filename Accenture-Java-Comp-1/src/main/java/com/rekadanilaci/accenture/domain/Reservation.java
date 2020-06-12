@@ -30,6 +30,8 @@ public class Reservation {
     //TODO a serviceben kell megcsinálni a logikát blablabla
 
 
+    // ======================= GETTERS =====================
+
     public Long getId() {
         return id;
     }

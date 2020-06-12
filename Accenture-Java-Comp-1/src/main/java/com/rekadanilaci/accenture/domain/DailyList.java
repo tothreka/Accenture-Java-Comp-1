@@ -26,6 +26,9 @@ public class DailyList {
     public DailyList() {
     }
 
+
+    //========================= GETTERS =========================
+
     public Long getId() {
         return id;
     }

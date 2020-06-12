@@ -27,6 +27,7 @@ public class Employee {
     public Employee() {
     }
 
+    // ================= GETTERS ======================
 
     public Long getId() {
         return id;
