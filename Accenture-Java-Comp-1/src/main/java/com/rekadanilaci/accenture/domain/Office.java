@@ -1,7 +1,9 @@
 package com.rekadanilaci.accenture.domain;
 
+import com.rekadanilaci.accenture.repository.DailyListRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.Map;
 @Component
 public class Office {
     private static final Logger logger = LoggerFactory.getLogger(Office.class);
+    @Autowired
+    private DailyListRepository dailyListRepository;
 
     private final Integer PLACES = 250;
 
@@ -41,7 +45,9 @@ public class Office {
             return "Invalid day, no reservation was created.";
         } //Assumption: Weekend days are valid as well.
         if (!reservationsLists.containsKey(day)) {
-            reservationsLists.put(day, new DailyList());
+            DailyList dailyList = new DailyList();
+            dailyListRepository.save(dailyList);
+            reservationsLists.put(day, dailyList);
         }
         if (reservationsLists.get(day).addReservation(new Reservation(employee, day))) {
             logger.info("Your reservation was created.");

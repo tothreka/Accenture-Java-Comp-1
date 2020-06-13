@@ -3,6 +3,7 @@ package com.rekadanilaci.accenture.service;
 import com.rekadanilaci.accenture.domain.Employee;
 import com.rekadanilaci.accenture.domain.Office;
 import com.rekadanilaci.accenture.domain.Reservation;
+import com.rekadanilaci.accenture.dto.EmployeeDto;
 import com.rekadanilaci.accenture.dto.ReservationDto;
 import com.rekadanilaci.accenture.repository.EmployeeRepository;
 import com.rekadanilaci.accenture.repository.ReservationRepository;
@@ -18,7 +19,6 @@ public class OfficeService {
     private EmployeeRepository employeeRepository;
     private ReservationRepository reservationRepository;
     private final Office office;
-//test
 
     @Autowired
     public OfficeService(EmployeeRepository employeeRepository, ReservationRepository reservationRepository, Office office) {
@@ -56,5 +56,19 @@ public class OfficeService {
     private void saveReservationToDatabase(Employee employee, LocalDate day) {
         Reservation newReservation = new Reservation(employee, day);
         reservationRepository.save(newReservation);
+    }
+
+    private void saveEmployeeToDatabase(EmployeeDto employeeDto) {
+        Employee employee = new Employee(employeeDto);
+        employeeRepository.save(employee);
+    }
+
+    public void fillEmployees() {
+        for (int i = 0; i < 200; i++) {
+            Employee employee = new Employee();
+            employee.setName("Employee" + i);
+            office.getStaff().add(employee);
+            employeeRepository.save(employee);
+        }
     }
 }

@@ -12,7 +12,8 @@ public class DailyList {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy = "dailyList", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dailyList")
+    @Column(name = "reservationList")
     private List<Reservation> reservationList;
 
     public DailyList(List<Reservation> reservationList) {
