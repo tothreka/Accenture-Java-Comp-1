@@ -111,6 +111,7 @@ public class Office {
     }
 
     public void addEmployee(Employee employee) {
+        //for test purposes
         staff.add(employee);
     }
 
