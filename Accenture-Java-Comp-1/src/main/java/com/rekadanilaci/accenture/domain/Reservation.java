@@ -3,6 +3,25 @@ package com.rekadanilaci.accenture.domain;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * Reservations can be created by Employees only. Nobody can enter
+ * the office in the pandemic period without a valid reservation.
+ *
+ * Reservations always specify the day, on which the employee wants to
+ * visit the office. Reservations can not contain specific hours.
+ * If a reservation can not be fulfilled on the given day, a next
+ * reservation must be created by the employee.
+ *
+ * Reservations can be created for the actual day and all dates after
+ * the actual day. No retrospective reservation is allowed.
+ *
+ * The application does not mange business hours, we assumed that entry
+ * is allowed in all hours of the day.
+ *
+ * Reservations have always a status, see ReservationStatus enum class
+ * for more information.
+ */
+
 @Entity
 @Table(name = "reservation")
 public class Reservation {
