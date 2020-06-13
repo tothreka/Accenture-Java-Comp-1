@@ -10,7 +10,7 @@ public class AccentureJavaComp1Application {
     public static void main(String[] args) { SpringApplication.run(AccentureJavaComp1Application.class, args);
         Office office = new Office();
         office.setNewCapacity(10);
-        //test push
+
     }
 
 }
