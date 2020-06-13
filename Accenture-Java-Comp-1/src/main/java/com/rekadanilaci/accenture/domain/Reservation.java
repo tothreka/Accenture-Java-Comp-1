@@ -18,6 +18,7 @@ public class Reservation {
     private LocalDate day;
 
     @Column(name = "reservationStatus")
+    @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
 
     @ManyToOne
