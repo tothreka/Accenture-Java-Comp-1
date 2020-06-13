@@ -22,6 +22,7 @@ public class Reservation {
     private ReservationStatus reservationStatus;
 
     @ManyToOne
+    @JoinColumn(name = "dailyList.id")
     private DailyList dailyList;
 
     public Reservation(Employee employee, LocalDate day) {
@@ -49,10 +50,17 @@ public class Reservation {
         return reservationStatus;
     }
 
+    public DailyList getDailyList() {
+        return dailyList;
+    }
     //================== SETTERS =================
 
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
+    }
+
+    public void setDailyList(DailyList dailyList) {
+        this.dailyList = dailyList;
     }
 }

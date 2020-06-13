@@ -1,37 +1,36 @@
-package com.rekadanilaci.accenture.service;
+package com.rekadanilaci.accenture.service.temp;
 
-import com.rekadanilaci.accenture.domain.Employee;
-import com.rekadanilaci.accenture.domain.Office;
-import com.rekadanilaci.accenture.domain.Reservation;
-import com.rekadanilaci.accenture.dto.EmployeeDto;
-import com.rekadanilaci.accenture.dto.ReservationDto;
-import com.rekadanilaci.accenture.repository.EmployeeRepository;
-import com.rekadanilaci.accenture.repository.ReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 
 @Service
 @Transactional
 public class OfficeService {
-    private EmployeeRepository employeeRepository;
+    /*private EmployeeRepository employeeRepository;
     private ReservationRepository reservationRepository;
-    private final Office office;
+    private Office office;
 
     @Autowired
-    public OfficeService(EmployeeRepository employeeRepository, ReservationRepository reservationRepository, Office office) {
+    public OfficeService(EmployeeRepository employeeRepository, ReservationRepository reservationRepository) {
         this.employeeRepository = employeeRepository;
         this.reservationRepository = reservationRepository;
-        this.office = office;
+        this.office = Office.getInstance();
     }
 
-    public void createReservation(ReservationDto reservationDto) {
+    public void createReservation(ReservationDto reservationDto) throws Exception {
         Long employeeId = reservationDto.getPerson();
         Employee employee = employeeRepository.getOne(employeeId);
         LocalDate day = reservationDto.getDay();
-        saveReservationToDatabase(employee, day);
+       /* switch (office.registerReservation(employeeId, day)) {
+            case INVALID_ID:
+                //throw new Exception("Invalid employee ID.");
+            case INVALID_DAY:
+                throw new Exception("Invalid date.");
+            case ALREADY_CREATED:
+                throw new Exception("Reservation already exists.");
+            case CREATED:
+                saveReservationToDatabase(employee, day);
+        }
         office.registerReservation(employeeId, day);
     }
 
@@ -58,7 +57,7 @@ public class OfficeService {
         reservationRepository.save(newReservation);
     }
 
-    private void saveEmployeeToDatabase(EmployeeDto employeeDto) {
+    /*private void saveEmployeeToDatabase(EmployeeDto employeeDto) {
         Employee employee = new Employee(employeeDto);
         employeeRepository.save(employee);
     }
@@ -67,8 +66,13 @@ public class OfficeService {
         for (int i = 0; i < 200; i++) {
             Employee employee = new Employee();
             employee.setName("Employee" + i);
-            office.getStaff().add(employee);
+            office.addEmployee(employee);
             employeeRepository.save(employee);
         }
+        int size = office.getStaff().size();
     }
+    */
+
 }
+
+

@@ -1,8 +1,6 @@
 package com.rekadanilaci.accenture.domain;
 
 import com.rekadanilaci.accenture.repository.DailyListRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,35 +12,37 @@ import java.util.Map;
 
 @Component
 public class Office {
-    private static final Logger logger = LoggerFactory.getLogger(Office.class);
-    @Autowired
+    private static Office office = new Office();
     private DailyListRepository dailyListRepository;
-
     private final Integer PLACES = 250;
+    private Integer capacity = 100;
+    private Integer freePlaces = PLACES * capacity / 100;
+    private List<Employee> staff = new ArrayList<>();
+    private Map<LocalDate, DailyList> reservationsLists = new HashMap<>();
 
-    private Integer capacity;
-    private Integer freePlaces;
-    private List<Employee> staff;
-    private Map<LocalDate, DailyList> reservationsLists;
+    @Autowired
+    private Office(DailyListRepository dailyListRepository) {
+        this.dailyListRepository = dailyListRepository;
+    }
 
-    public Office() {
-        this.capacity = 100;
-        this.freePlaces = PLACES * capacity / 100;
-        this.staff = new ArrayList<>();
-        this.reservationsLists = new HashMap<>();
+    private Office() {
+    }
+
+    public static Office getInstance() {
+        return office;
     }
 
     // ========== REGISTER ENDPOINT ===========
 
-    public String registerReservation(Long employeeID, LocalDate day) {
+    /*public ReservationMessage registerReservation(Long employeeID, LocalDate day) {
         Employee employee = findEmployeeInStaff(employeeID);
         if (employee == null) {
             logger.warn("Invalid ID, no reservation was created.");
-            return "Invalid ID, no reservation was created.";
+            return ReservationMessage.INVALID_ID;
         }
         if (day.compareTo(LocalDate.now()) < 0) {
             logger.warn("Invalid day, no reservation was created.");
-            return "Invalid day, no reservation was created.";
+            return ReservationMessage.INVALID_DAY;
         } //Assumption: Weekend days are valid as well.
         if (!reservationsLists.containsKey(day)) {
             DailyList dailyList = new DailyList();
@@ -51,25 +51,25 @@ public class Office {
         }
         if (reservationsLists.get(day).addReservation(new Reservation(employee, day))) {
             logger.info("Your reservation was created.");
-            return "Your reservation was created.";
+            return ReservationMessage.CREATED;
         } else {
             logger.info("Your reservation was not created, you already have reservations for this day.");
-            return "Your reservation was not created, you already have reservations for this day.";
+            return ReservationMessage.ALREADY_CREATED;
         }
-    }
+    }*/
 
-    public Employee findEmployeeInStaff(Long employeeID) {
+    /*public Employee findEmployeeInStaff(Long employeeID) {
         for (Employee employee : staff) {
             if (employee.getId().equals(employeeID)) {
                 return employee;
             }
         }
         return null;
-    }
+    }*/
 
-    // =========== STATUS ENDPOINT ===========
+    //  =========== STATUS ENDPOINT ===========
 
-    public String reportStatus(Long employeeID, LocalDate day) {
+    /*public String reportStatus(Long employeeID, LocalDate day) {
         String answer = "";
         if (!reservationsLists.containsKey(day)) {
             answer = "There are no reservations for this day.";
@@ -102,7 +102,7 @@ public class Office {
     public void exit(Long employeeID) {
         DailyList todayList = reservationsLists.get(LocalDate.now());
         todayList.exitOffice(employeeID);
-    }
+    }*/
 
 
     // =========== GENERAL METHODS ===========
@@ -118,7 +118,7 @@ public class Office {
 
     public void addEmployee(Employee employee) {
         //for test purposes
-        staff.add(employee);
+        this.staff.add(employee);
     }
 
     // =========== GETTERS =============

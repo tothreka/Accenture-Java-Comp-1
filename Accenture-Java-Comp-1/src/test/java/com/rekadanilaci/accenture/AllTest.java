@@ -2,9 +2,12 @@ package com.rekadanilaci.accenture;
 
 import com.rekadanilaci.accenture.domain.Employee;
 import com.rekadanilaci.accenture.domain.Office;
+import com.rekadanilaci.accenture.dto.ReservationDto;
+import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
@@ -12,7 +15,9 @@ import java.time.LocalDate;
 @SpringBootTest
 class AllTest {
 
-    private Office office = new Office();
+    private Office office = Office.getInstance();
+    @Autowired
+    private OfficeManagementService officeManagementService;
 
     @BeforeEach
     void makeEmployees() {
@@ -39,12 +44,15 @@ class AllTest {
         Assertions.assertEquals(125, office.getFreePlaces());
     }
 
+    //TODO ez vmiért enm fut le, de élesben meg lefut
     @Test
     void registerGoodReservation() {
-        Long employeeId = office.getStaff().get(15).getId();
+        Long employeeId = office.getStaff().get(10).getId();
         LocalDate date = LocalDate.now();
-        office.registerReservation(employeeId, date);
-        Assertions.assertEquals(1, office.getReservationsLists().size());
+        ReservationDto dto = new ReservationDto(employeeId, date);
+        officeManagementService.createNewReservation(dto);
+        Assertions.assertEquals("Created", officeManagementService.createNewReservation(dto));
+
     }
 
 

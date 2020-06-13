@@ -1,29 +1,26 @@
-package com.rekadanilaci.accenture.domain;
+package com.rekadanilaci.accenture.service;
 
+import com.rekadanilaci.accenture.domain.DailyList;
+import com.rekadanilaci.accenture.domain.Reservation;
+import com.rekadanilaci.accenture.domain.ReservationStatus;
+import com.rekadanilaci.accenture.repository.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Entity
-@Table(name = "dailyList")
-public class DailyList {
+public class DailyListManagementService {
+    private DailyList dailyList;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
-    @OneToMany(mappedBy = "dailyList")
-    private List<Reservation> reservationList = new ArrayList<>();
-
-
-    public DailyList() {
+    @Autowired
+    public DailyListManagementService(DailyList dailyList, ReservationRepository reservationRepository) {
+        this.dailyList = dailyList;
     }
 
-   /* public int getPositionInEnrollList(Long employeeId, int officeFreePlaces) {
+
+    public int getPositionInEnrollList(Long employeeId, int officeFreePlaces) {
+        List<Reservation> reservationList = dailyList.getReservationList();
         int enrolledEmployees = 0;
         int enteredEmployees = 0;
         for (Reservation reservation : reservationList) {
@@ -39,10 +36,11 @@ public class DailyList {
     }
 
     public boolean addReservation(Reservation reservation) {
+        List<Reservation> reservationList = dailyList.getReservationList();
         boolean isCreated = true;
         for (Reservation currentReservation : reservationList) {
             if (currentReservation.getEmployee().equals(reservation.getEmployee()) &&
-            !currentReservation.getReservationStatus().equals(ReservationStatus.LEFT_OFFICE)) {
+                    !currentReservation.getReservationStatus().equals(ReservationStatus.LEFT_OFFICE)) {
                 isCreated = false;
             }
         }
@@ -52,32 +50,37 @@ public class DailyList {
         return isCreated;
     }
 
-    public void enterOffice(Long employeeId) {
+    public boolean enterOffice(Long employeeId) {
+        boolean entered = false;
+        List<Reservation> reservationList = dailyList.getReservationList();
         for (Reservation reservation : reservationList) {
             if (reservation.getEmployee().getId().equals(employeeId) &&
                     reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
                 reservation.setReservationStatus(ReservationStatus.ENTERED_OFFICE);
+                entered = true;
             }
         }
+        return entered;
     }
 
     public void exitOffice(Long employeeId) {
+        List<Reservation> reservationList = dailyList.getReservationList();
         for (Reservation reservation : reservationList) {
             if (reservation.getEmployee().getId().equals(employeeId) &&
                     reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
                 reservation.setReservationStatus(ReservationStatus.LEFT_OFFICE);
             }
         }
-    }*/
-
-
-    //========================= GETTERS =========================
-
-    public Long getId() {
-        return id;
     }
 
-    public List<Reservation> getReservationList() {
-        return reservationList;
+
+    //============ GETTER, SETTER ============
+
+    public DailyList getDailyList() {
+        return dailyList;
+    }
+
+    public void setDailyList(DailyList dailyList) {
+        this.dailyList = dailyList;
     }
 }
