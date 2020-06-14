@@ -10,14 +10,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The task description mentioned only one Office, thus, this class supposed to be a
+ * singleton in the current version. It can be extended for a multi-office version
+ * after introducing an ID field.
+ */
+
 @Component
 public class Office {
     private static Office office = new Office();
     private DailyListRepository dailyListRepository;
+
+    /**
+     * The maximum number of available places if it works with 100% capacity.
+     * It is a constant according to the task description.
+     */
     private final Integer PLACES = 250;
+
+    /**
+     * The actually allowed capacity in %. It can be changed easily to increase the
+     * targeted occupation level.
+     */
     private Integer capacity = 100;
+
+    /**
+     * The number of the usable places depending on the allowed capacity %.
+     */
     private Integer freePlaces = PLACES * capacity / 100;
+
+    /**
+     * List of all Employees, who can enter the office.
+     */
     private List<Employee> staff = new ArrayList<>();
+
+    /**
+     * Lists of Reservations mapped by the targeted day.
+     */
     private Map<LocalDate, DailyList> reservationsLists = new HashMap<>();
 
     @Autowired
