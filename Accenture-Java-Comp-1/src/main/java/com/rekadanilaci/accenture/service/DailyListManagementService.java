@@ -18,6 +18,17 @@ public class DailyListManagementService {
         this.dailyList = dailyList;
     }
 
+    /**
+     * The below method calculates the position of the employee in the actual waiting list
+     * (calculated from the appropriate dailylist, that contains all Reservations regardless
+     * of their status.)
+     * The parameter "officeFreePlaces" will be transferred from the Office class to get
+     * the actual number of places ready to use.
+     * Negative result means, the employee can  enter the office immediately.
+     * @param employeeId
+     * @param officeFreePlaces
+     * @return
+     */
 
     public int getPositionInEnrollList(Long employeeId, int officeFreePlaces) {
         List<Reservation> reservationList = dailyList.getReservationList();
@@ -35,6 +46,14 @@ public class DailyListManagementService {
         return enrolledEmployees - (officeFreePlaces - enteredEmployees);
     }
 
+    /**
+     * Reservations will be added to the appropriate dailyLists immediately after creation.
+     * If the employee has an active Reservation for the given day, no Reservation will be
+     * created.
+     * @param reservation
+     * @return
+     */
+
     public boolean addReservation(Reservation reservation) {
         List<Reservation> reservationList = dailyList.getReservationList();
         boolean isCreated = true;
@@ -50,6 +69,13 @@ public class DailyListManagementService {
         return isCreated;
     }
 
+    /**
+     * Employees can enter the office only if they have an active Reservation for the
+     * given day. (Active = their status is ENROLLED.)
+     * @param employeeId
+     * @return
+     */
+
     public boolean enterOffice(Long employeeId) {
         boolean entered = false;
         List<Reservation> reservationList = dailyList.getReservationList();
@@ -63,6 +89,11 @@ public class DailyListManagementService {
         return entered;
     }
 
+    /**
+     * Exit is always allowed and executed.
+     * @param employeeId
+     */
+
     public void exitOffice(Long employeeId) {
         List<Reservation> reservationList = dailyList.getReservationList();
         for (Reservation reservation : reservationList) {
@@ -74,7 +105,7 @@ public class DailyListManagementService {
     }
 
 
-    //============ GETTER, SETTER ============
+    //=========================== GETTER, SETTER ==================================
 
     public DailyList getDailyList() {
         return dailyList;
