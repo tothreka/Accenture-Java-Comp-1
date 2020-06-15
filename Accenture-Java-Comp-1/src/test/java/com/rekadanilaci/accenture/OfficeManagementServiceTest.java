@@ -3,6 +3,7 @@ package com.rekadanilaci.accenture;
 import com.rekadanilaci.accenture.domain.Employee;
 import com.rekadanilaci.accenture.domain.Office;
 import com.rekadanilaci.accenture.domain.Reservation;
+import com.rekadanilaci.accenture.domain.ReservationStatus;
 import com.rekadanilaci.accenture.dto.ReservationDto;
 import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.junit.jupiter.api.*;
@@ -88,6 +89,14 @@ class OfficeManagementServiceTest {
         }
         Assertions.assertEquals("You are in the position 1 now in the waiting list for the given day.", officeManagementService.getReservationStatus(officeManagementService.getOffice().getStaff().get(5).getId()));
         officeManagementService.getOffice().getReservationsLists().clear();
+    }
+
+    @Test
+    public void enterOfficeTest() {
+        Long employeeId = officeManagementService.getOffice().getStaff().get(0).getId();
+        ReservationDto reservationDto = new ReservationDto(employeeId, today);
+        Assertions.assertTrue(officeManagementService.requestEntryToOffice(employeeId));
+        Assertions.assertEquals(ReservationStatus.ENTERED_OFFICE, officeManagementService.getOffice().getStaff().get(0).getReservationList().get(0).getReservationStatus());
     }
 
 
