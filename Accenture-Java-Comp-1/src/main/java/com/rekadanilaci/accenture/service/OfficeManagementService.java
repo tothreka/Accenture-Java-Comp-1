@@ -212,11 +212,16 @@ public class OfficeManagementService {
     //========================= OTHER METHODS ================================
 
     public void fillEmployees() {
-        for (int i = 0; i < 100; i++) {
-            Employee employee = new Employee();
-            employee.setName("Employee" + i);
+        //for test purposes
+        StringBuilder employeeName = new StringBuilder();
+        for (int i = 1; i < 301; i++) {
+            employeeName.append("Employee");
+            employeeName.append(1);
+            String name = employeeName.toString();
+            Employee employee = new Employee(name);
             office.addEmployee(employee);
             employeeRepository.save(employee);
+            employeeName.delete(0, employeeName.length());
         }
         logger.info("Added " + office.getStaff().size() + " employees to database");
     }
@@ -226,5 +231,9 @@ public class OfficeManagementService {
 
     public EmployeeRepository getEmployeeRepository() {
         return employeeRepository;
+    }
+
+    public Office getOffice() {
+        return office;
     }
 }
