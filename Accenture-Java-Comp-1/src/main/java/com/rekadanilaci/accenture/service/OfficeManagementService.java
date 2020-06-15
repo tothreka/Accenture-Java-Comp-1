@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -227,8 +226,7 @@ public class OfficeManagementService {
             employeeName.append("Employee");
             employeeName.append(1);
             String name = employeeName.toString();
-            List<Reservation> reservationList = new ArrayList<>();
-            Employee employee = new Employee(name, reservationList);
+            Employee employee = new Employee(name);
             office.addEmployee(employee);
             employeeRepository.save(employee);
             employeeName.delete(0, employeeName.length());
