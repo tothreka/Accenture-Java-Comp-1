@@ -1,7 +1,7 @@
 package com.rekadanilaci.accenture.domain;
 
 /**
- * When Reservation is created, it gets the ENROLLED status automatically.
+ * When a Reservation is created, it gets the ENROLLED status automatically.
  * (When the request for creating a reservation is invalid, no Reservation
  * will be created.) It means, the Reservation will be added the to the
  * appropriate DailyList, selected based on the requested entry day.
@@ -13,7 +13,7 @@ package com.rekadanilaci.accenture.domain;
  * When an employee leaves the office, the status of the appropriate
  * Reservation becomes LEFT_OFFICE. It means, one place in the office is
  * unblocked. Leaving the office is a prerequisite for new Reservation
- * for the same actual day.
+ * for the same actual day form the same employee.
  */
 
 public enum ReservationStatus {

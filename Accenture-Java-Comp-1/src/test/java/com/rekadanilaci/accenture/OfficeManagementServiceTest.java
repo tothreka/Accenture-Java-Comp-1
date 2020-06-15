@@ -108,5 +108,20 @@ class OfficeManagementServiceTest {
     }
 
 
+    @Test
+    public void leftOfficeTest() {
+        Long employeeId = officeManagementService.getOffice().getStaff().get(0).getId();
+        ReservationDto reservationDto = new ReservationDto(employeeId, today);
+        officeManagementService.createNewReservation(reservationDto);
+        Reservation reservation = officeManagementService.getOffice().getReservationsLists().get(LocalDate.now())
+                .getReservationList().get(0);
+        officeManagementService.createNewReservation(reservationDto);
+        officeManagementService.requestEntryToOffice(employeeId);
+        officeManagementService.exitOffice(employeeId);
+        Assertions.assertEquals(ReservationStatus.LEFT_OFFICE, reservation.getReservationStatus());
+        officeManagementService.getOffice().getReservationsLists().clear();
+    }
+
+
 
 }

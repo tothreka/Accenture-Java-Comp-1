@@ -11,6 +11,8 @@ public class ReservationDto {
         this.day = day;
     }
 
+    //============================== GETTERS ==============================
+
     public Long getPerson() {
         return person;
     }

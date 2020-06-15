@@ -11,7 +11,7 @@ import java.util.List;
  * The keys are the requested days, when the employees want to enter the office.
  * The DailyLists contains all Reservations created for the given day. Because
  * Reservations are immediately ordered to a DailyList after their creations,
- * the DailyLists contain the Reservations in order pf creations.
+ * the DailyLists contain the Reservations in order of creations.
  *
  * When a Reservation is used, it will remain in the appropriate DailyList,
  * only the status of the Reservation will be changed.
@@ -39,53 +39,6 @@ public class DailyList {
 
     public DailyList() {
     }
-
-   /* public int getPositionInEnrollList(Long employeeId, int officeFreePlaces) {
-        int enrolledEmployees = 0;
-        int enteredEmployees = 0;
-        for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId().equals(employeeId)) {
-                break;
-            } else if (reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
-                enrolledEmployees++;
-            } else if (reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
-                enteredEmployees++;
-            }
-        }
-        return enrolledEmployees - (officeFreePlaces - enteredEmployees);
-    }
-
-    public boolean addReservation(Reservation reservation) {
-        boolean isCreated = true;
-        for (Reservation currentReservation : reservationList) {
-            if (currentReservation.getEmployee().equals(reservation.getEmployee()) &&
-            !currentReservation.getReservationStatus().equals(ReservationStatus.LEFT_OFFICE)) {
-                isCreated = false;
-            }
-        }
-        if (isCreated) {
-            reservationList.add(reservation);
-        }
-        return isCreated;
-    }
-
-    public void enterOffice(Long employeeId) {
-        for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId().equals(employeeId) &&
-                    reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
-                reservation.setReservationStatus(ReservationStatus.ENTERED_OFFICE);
-            }
-        }
-    }
-
-    public void exitOffice(Long employeeId) {
-        for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId().equals(employeeId) &&
-                    reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
-                reservation.setReservationStatus(ReservationStatus.LEFT_OFFICE);
-            }
-        }
-    }*/
 
 
     //========================= GETTERS =========================
