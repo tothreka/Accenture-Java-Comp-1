@@ -99,8 +99,9 @@ class OfficeManagementServiceTest {
         ReservationDto reservationDto = new ReservationDto(employeeId, today);
         officeManagementService.createNewReservation(reservationDto);
         Assertions.assertTrue(officeManagementService.requestEntryToOffice(employeeId));
-        List<Reservation> reservationList = staff.get(0).getReservationList();
-        Reservation reservation = reservationList.get(0);
+
+        Reservation reservation = officeManagementService.getOffice().getReservationsLists().get(LocalDate.now()).getReservationList().get(0);
+
         Assertions.assertEquals(ReservationStatus.ENTERED_OFFICE, reservation.getReservationStatus());
         System.out.println();
     }
