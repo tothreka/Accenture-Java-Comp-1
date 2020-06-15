@@ -50,6 +50,9 @@ public class Reservation {
         this.reservationStatus = ReservationStatus.ENROLLED;
     }
 
+    public Reservation() {
+    }
+
 
     // ======================= GETTERS =====================
 

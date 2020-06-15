@@ -18,7 +18,7 @@ public class OfficeController {
     }
 
     @PostMapping
-    public ResponseEntity addReservation(@RequestBody ReservationDto reservationDto) throws Exception {
+    public ResponseEntity addReservation(@RequestBody ReservationDto reservationDto) {
         officeService.createNewReservation(reservationDto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
