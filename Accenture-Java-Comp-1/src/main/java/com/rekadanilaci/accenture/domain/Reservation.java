@@ -66,16 +66,8 @@ public class Reservation {
         return employee;
     }
 
-    public LocalDate getDay() {
-        return day;
-    }
-
     public ReservationStatus getReservationStatus() {
         return reservationStatus;
-    }
-
-    public DailyList getDailyList() {
-        return dailyList;
     }
 
 
