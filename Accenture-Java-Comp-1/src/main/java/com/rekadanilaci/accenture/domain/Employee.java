@@ -43,9 +43,10 @@ public class Employee {
         this.name = employeeDto.getName();
     }
 
-    public Employee(String name) {
+    public Employee(String name, List<Reservation> reservationList) {
         //For test purposes
         this.name = name;
+        this.reservationList = reservationList;
     }
 
     public Employee() {

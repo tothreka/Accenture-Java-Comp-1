@@ -3,7 +3,7 @@ package com.rekadanilaci.accenture.service;
 import com.rekadanilaci.accenture.domain.DailyList;
 import com.rekadanilaci.accenture.domain.Reservation;
 import com.rekadanilaci.accenture.domain.ReservationStatus;
-import com.rekadanilaci.accenture.repository.ReservationRepository;
+import com.rekadanilaci.accenture.repository.DailyListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +12,12 @@ import java.util.List;
 @Component
 public class DailyListManagementService {
     private DailyList dailyList;
+    private DailyListRepository dailyListRepository;
 
     @Autowired
-    public DailyListManagementService(DailyList dailyList, ReservationRepository reservationRepository) {
+    public DailyListManagementService(DailyList dailyList, DailyListRepository dailyListRepository) {
         this.dailyList = dailyList;
+        this.dailyListRepository = dailyListRepository;
     }
 
     /**
@@ -25,6 +27,7 @@ public class DailyListManagementService {
      * The parameter "officeFreePlaces" will be transferred from the Office class to get
      * the actual number of places ready to use.
      * Negative result means, the employee can  enter the office immediately.
+     *
      * @param employeeId
      * @param officeFreePlaces
      * @return
@@ -50,6 +53,7 @@ public class DailyListManagementService {
      * Reservations will be added to the appropriate dailyLists immediately after creation.
      * If the employee has an active Reservation for the given day, no Reservation will be
      * created.
+     *
      * @param reservation
      * @return
      */
@@ -72,6 +76,7 @@ public class DailyListManagementService {
     /**
      * Employees can enter the office only if they have an active Reservation for the
      * given day. (Active = their status is ENROLLED.)
+     *
      * @param employeeId
      * @return
      */
@@ -91,6 +96,7 @@ public class DailyListManagementService {
 
     /**
      * Exit is always allowed and executed.
+     *
      * @param employeeId
      */
 

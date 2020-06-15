@@ -1,5 +1,7 @@
 package com.rekadanilaci.accenture;
 
+import com.rekadanilaci.accenture.domain.Employee;
+import com.rekadanilaci.accenture.domain.Reservation;
 import com.rekadanilaci.accenture.domain.ReservationStatus;
 import com.rekadanilaci.accenture.dto.ReservationDto;
 import com.rekadanilaci.accenture.service.OfficeManagementService;
@@ -13,6 +15,7 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -91,10 +94,15 @@ class OfficeManagementServiceTest {
 
     @Test
     public void enterOfficeTest() {
-        Long employeeId = officeManagementService.getOffice().getStaff().get(0).getId();
+        List<Employee> staff = officeManagementService.getOffice().getStaff();
+        Long employeeId = staff.get(0).getId();
         ReservationDto reservationDto = new ReservationDto(employeeId, today);
+        officeManagementService.createNewReservation(reservationDto);
         Assertions.assertTrue(officeManagementService.requestEntryToOffice(employeeId));
-        Assertions.assertEquals(ReservationStatus.ENTERED_OFFICE, officeManagementService.getOffice().getStaff().get(0).getReservationList().get(0).getReservationStatus());
+        List<Reservation> reservationList = staff.get(0).getReservationList();
+        Reservation reservation = reservationList.get(0);
+        Assertions.assertEquals(ReservationStatus.ENTERED_OFFICE, reservation.getReservationStatus());
+        System.out.println();
     }
 
 

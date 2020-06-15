@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ public class OfficeManagementService {
             if (!checkForAlreadyExistingReservation(day, employee)) {
                 state = "Reservation does not exist";
                 Reservation reservation = new Reservation(employee, day);
+
                 if (connectDailyListAndReservation(day, reservation) != null) {
                     state = "Created";
                 } else {
@@ -118,6 +120,7 @@ public class OfficeManagementService {
         dailyListService.addReservation(reservation);
         reservation.setDailyList(dailyList);
         Reservation successfulReservation = reservationRepository.save(reservation);
+
         return successfulReservation;
     }
 
@@ -222,7 +225,8 @@ public class OfficeManagementService {
             employeeName.append("Employee");
             employeeName.append(1);
             String name = employeeName.toString();
-            Employee employee = new Employee(name);
+            List<Reservation> reservationList = new ArrayList<>();
+            Employee employee = new Employee(name, reservationList);
             office.addEmployee(employee);
             employeeRepository.save(employee);
             employeeName.delete(0, employeeName.length());
