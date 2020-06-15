@@ -23,14 +23,16 @@ import java.util.Map;
 public class OfficeManagementService {
     private static final Logger logger = LoggerFactory.getLogger(OfficeManagementService.class);
     private DailyListRepository dailyListRepository;
-    private Office office = Office.getInstance();
+    private Office office;
+    //private Office office = Office.getInstance();
     private DailyListManagementService dailyListService;
     private ReservationRepository reservationRepository;
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    public OfficeManagementService(DailyListRepository dailyListRepository, DailyListManagementService dailyListService, ReservationRepository reservationRepository, EmployeeRepository employeeRepository) {
+    public OfficeManagementService(DailyListRepository dailyListRepository, Office office, DailyListManagementService dailyListService, ReservationRepository reservationRepository, EmployeeRepository employeeRepository) {
         this.dailyListRepository = dailyListRepository;
+        this.office = office;
         this.dailyListService = dailyListService;
         this.reservationRepository = reservationRepository;
         this.employeeRepository = employeeRepository;

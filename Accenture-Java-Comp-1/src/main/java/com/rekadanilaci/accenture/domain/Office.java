@@ -49,16 +49,16 @@ public class Office {
     private Map<LocalDate, DailyList> reservationsLists = new HashMap<>();
 
     @Autowired
-    private Office(DailyListRepository dailyListRepository) {
+    public Office(DailyListRepository dailyListRepository) {
         this.dailyListRepository = dailyListRepository;
     }
 
-    private Office() {
+    public Office() {
     }
 
-    public static Office getInstance() {
+   /* public static Office getInstance() {
         return office;
-    }
+    }*/
 
     // ========== REGISTER ENDPOINT ===========
 
