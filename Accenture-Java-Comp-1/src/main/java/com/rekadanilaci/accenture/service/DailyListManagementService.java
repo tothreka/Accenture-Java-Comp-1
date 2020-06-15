@@ -4,6 +4,7 @@ import com.rekadanilaci.accenture.domain.DailyList;
 import com.rekadanilaci.accenture.domain.Reservation;
 import com.rekadanilaci.accenture.domain.ReservationStatus;
 import com.rekadanilaci.accenture.repository.DailyListRepository;
+import com.rekadanilaci.accenture.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +14,13 @@ import java.util.List;
 public class DailyListManagementService {
     private DailyList dailyList;
     private DailyListRepository dailyListRepository;
+    private ReservationRepository reservationRepository;
 
     @Autowired
-    public DailyListManagementService(DailyList dailyList, DailyListRepository dailyListRepository) {
+    public DailyListManagementService(DailyList dailyList, DailyListRepository dailyListRepository, ReservationRepository reservationRepository) {
         this.dailyList = dailyList;
         this.dailyListRepository = dailyListRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     /**
@@ -87,7 +90,9 @@ public class DailyListManagementService {
         for (Reservation reservation : reservationList) {
             if (reservation.getEmployee().getId().equals(employeeId) &&
                     reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
-                reservation.setReservationStatus(ReservationStatus.ENTERED_OFFICE);
+                reservationRepository.getOne(reservation.getId())
+                        .setReservationStatus(ReservationStatus.ENTERED_OFFICE);
+
                 entered = true;
             }
         }
