@@ -23,19 +23,19 @@ public class OfficeController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @GetMapping("/status")
+    @GetMapping("/{employeeId}")
     public ResponseEntity getStatus(@PathVariable Long employeeId) {
         String status = officeService.getReservationStatus(employeeId);
         return new ResponseEntity(status, HttpStatus.OK);
     }
 
-    @GetMapping("/entryrequest")
+    @GetMapping("/entry/{employeeId}")
     public ResponseEntity requestEntry(@PathVariable Long employeeId) {
         boolean canEntry = officeService.requestEntryToOffice(employeeId);
         return new ResponseEntity(canEntry, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/")
+    @PutMapping("/exit/{id}/")
     public ResponseEntity exitOffice(@PathVariable Long id) {
         officeService.exitOffice(id);
         return new ResponseEntity(HttpStatus.valueOf("EXIT"));
