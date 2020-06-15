@@ -10,12 +10,12 @@ import java.time.LocalDate;
  * Reservations always specify the day, on which the employee wants to
  * visit the office. Reservations can not contain specific hours.
  * If a reservation can not be fulfilled on the given day, a next
- * reservation must be created by the employee.
+ * reservation must be created by the employee for the next day.
  *
  * Reservations can be created for the actual day and all dates after
  * the actual day. No retrospective reservation is allowed.
  *
- * The application does not mange business hours, we assumed that entry
+ * The application does not manage business hours, we assumed that entry
  * is allowed in all hours of the day.
  *
  * Reservations have always a status, see ReservationStatus enum class
@@ -56,7 +56,7 @@ public class Reservation {
 
 
 
-    // ======================= GETTERS =====================
+    // ===================== GETTERS =======================
 
     public Long getId() {
         return id;
@@ -77,8 +77,9 @@ public class Reservation {
     public DailyList getDailyList() {
         return dailyList;
     }
-    //================== SETTERS =================
 
+
+    //====================== SETTERS ========================
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
