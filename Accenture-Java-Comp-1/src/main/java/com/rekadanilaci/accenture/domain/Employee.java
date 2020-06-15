@@ -46,7 +46,6 @@ public class Employee {
     public Employee(String name, List<Reservation> reservationList) {
         //For test purposes
         this.name = name;
-        this.reservationList = reservationList;
     }
 
     public Employee() {
