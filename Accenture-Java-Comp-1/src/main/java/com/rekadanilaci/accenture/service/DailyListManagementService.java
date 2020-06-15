@@ -105,14 +105,19 @@ public class DailyListManagementService {
      * @param employeeId
      */
 
-    public void exitOffice(Long employeeId) {
+    public boolean exitOffice(Long employeeId) {
+        boolean exited = false;
         List<Reservation> reservationList = dailyList.getReservationList();
         for (Reservation reservation : reservationList) {
             if (reservation.getEmployee().getId().equals(employeeId) &&
-                    reservation.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
-                reservation.setReservationStatus(ReservationStatus.LEFT_OFFICE);
+                    reservationRepository.getOne(reservation.getId())
+                            .getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
+                reservationRepository.getOne(reservation.getId())
+                        .setReservationStatus(ReservationStatus.LEFT_OFFICE);
+                exited = true;
             }
         }
+        return exited;
     }
 
 

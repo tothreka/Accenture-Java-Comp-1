@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(("/api/office"))
+@RequestMapping("/api/office")
 public class OfficeController {
     private OfficeManagementService officeService;
 
@@ -35,9 +35,9 @@ public class OfficeController {
         return new ResponseEntity(canEntry, HttpStatus.OK);
     }
 
-    @PutMapping("/exit/{id}/")
-    public ResponseEntity exitOffice(@PathVariable Long id) {
-        officeService.exitOffice(id);
-        return new ResponseEntity(HttpStatus.valueOf("EXIT"));
+    @GetMapping("/exit/{employeeId}")
+    public ResponseEntity exitOffice(@PathVariable Long employeeId) {
+        boolean exit = officeService.exitOffice(employeeId);
+        return new ResponseEntity(exit, HttpStatus.OK);
     }
 }

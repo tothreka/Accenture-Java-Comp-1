@@ -204,9 +204,10 @@ public class OfficeManagementService {
      * @param employeeId
      */
 
-    public void exitOffice(Long employeeId) {
+    public boolean exitOffice(Long employeeId) {
         fetchDailyListFromService();
-        dailyListService.exitOffice(employeeId);
+        boolean exited = dailyListService.exitOffice(employeeId);
+        return exited;
     }
 
     private void fetchDailyListFromService() {
