@@ -1,7 +1,5 @@
 package com.rekadanilaci.accenture.domain;
 
-import com.rekadanilaci.accenture.dto.EmployeeDto;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -36,14 +34,8 @@ public class Employee {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
-    private List<Reservation> reservationList;
 
-    public Employee(EmployeeDto employeeDto) {
-        this.name = employeeDto.getName();
-    }
-
-    public Employee(String name, List<Reservation> reservationList) {
+    public Employee(String name) {
         //For test purposes
         this.name = name;
     }
@@ -61,18 +53,5 @@ public class Employee {
         return name;
     }
 
-    public List<Reservation> getReservationList() {
-        return reservationList;
-    }
 
-    // ================= SETTERS ======================
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

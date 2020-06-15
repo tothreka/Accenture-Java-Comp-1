@@ -55,13 +55,25 @@ class OfficeManagementServiceTest {
     }
 
     @Test
-    public void newInvalidReservationTest() {
+    public void newInvalidReservationForYesterdayTest() {
         LocalDate yesterday = today.minusDays(1);
         Long employeeId = officeManagementService.getOffice().getStaff().get(15).getId();
         ReservationDto reservationDto = new ReservationDto(employeeId, yesterday);
         String saveMessage = officeManagementService.createNewReservation(reservationDto);
         Assertions.assertEquals("Invalid reservation", saveMessage);
         Assertions.assertEquals(0, officeManagementService.getOffice().getReservationsLists().size());
+    }
+
+    @Test
+    public void newInvalidReservationForAlreadyExistingTest() {
+        Long employeeId = officeManagementService.getOffice().getStaff().get(15).getId();
+        ReservationDto reservationDto = new ReservationDto(employeeId, today);
+        ReservationDto reservationDtoDoubled = new ReservationDto(employeeId, today);
+        officeManagementService.createNewReservation(reservationDto);
+        String saveMessage = officeManagementService.createNewReservation(reservationDtoDoubled);
+        Assertions.assertEquals("Reservation already exist", saveMessage);
+        Assertions.assertEquals(1, officeManagementService.getOffice().getReservationsLists().size());
+        officeManagementService.getOffice().getReservationsLists().clear();
     }
 
     @Test

@@ -74,14 +74,6 @@ public class Office {
 
     // ================================ GETTERS =====================================
 
-    public Integer getPLACES() {
-        return PLACES;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
     public Integer getFreePlaces() {
         return freePlaces;
     }

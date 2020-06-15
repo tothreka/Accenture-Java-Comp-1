@@ -1,9 +1,6 @@
 package com.rekadanilaci.accenture.service;
 
-import com.rekadanilaci.accenture.domain.DailyList;
-import com.rekadanilaci.accenture.domain.Employee;
-import com.rekadanilaci.accenture.domain.Office;
-import com.rekadanilaci.accenture.domain.Reservation;
+import com.rekadanilaci.accenture.domain.*;
 import com.rekadanilaci.accenture.dto.ReservationDto;
 import com.rekadanilaci.accenture.repository.DailyListRepository;
 import com.rekadanilaci.accenture.repository.EmployeeRepository;
@@ -96,9 +93,14 @@ public class OfficeManagementService {
         DailyList dailyList = createDailyListIfMissing(day);
         Reservation reservationToSearch = new Reservation(employee, day);
         List<Reservation> reservationList = dailyList.getReservationList();
-        boolean exists = reservationList.contains(reservationToSearch);
-        if (exists) {
-            logger.info("Your reservation was not created, you already have reservations for this day.");
+        reservationList.contains(reservationToSearch);
+        boolean exists = false;
+        for (Reservation reservation : reservationList) {
+            if (reservation.getEmployee().equals(employee) && !reservation.getReservationStatus().equals(ReservationStatus.LEFT_OFFICE)) {
+                exists = true;
+                logger.info("Your reservation was not created, you already have reservations for this day.");
+
+            }
         }
         return exists;
     }
