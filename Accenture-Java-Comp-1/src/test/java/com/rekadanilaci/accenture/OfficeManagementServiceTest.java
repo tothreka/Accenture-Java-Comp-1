@@ -71,7 +71,7 @@ class OfficeManagementServiceTest {
         ReservationDto reservationDtoDoubled = new ReservationDto(employeeId, today);
         officeManagementService.createNewReservation(reservationDto);
         String saveMessage = officeManagementService.createNewReservation(reservationDtoDoubled);
-        Assertions.assertEquals("Your reservation was not created, you already have reservations for this day.", saveMessage);
+        Assertions.assertEquals("Reservation already exist", saveMessage);
         Assertions.assertEquals(1, officeManagementService.getOffice().getReservationsLists().size());
         officeManagementService.getOffice().getReservationsLists().clear();
     }
