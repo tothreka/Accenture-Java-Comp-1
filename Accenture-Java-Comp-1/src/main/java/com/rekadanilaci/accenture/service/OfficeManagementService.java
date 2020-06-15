@@ -24,7 +24,6 @@ public class OfficeManagementService {
     private static final Logger logger = LoggerFactory.getLogger(OfficeManagementService.class);
     private DailyListRepository dailyListRepository;
     private Office office;
-    //private Office office = Office.getInstance();
     private DailyListManagementService dailyListService;
     private ReservationRepository reservationRepository;
     private EmployeeRepository employeeRepository;
@@ -40,6 +39,17 @@ public class OfficeManagementService {
 
     public OfficeManagementService() {
     }
+
+    //========================= REGISTER ENDPOINT ================================
+
+    /**
+     * When an employee starts a reservation, the below method manages the request
+     * and sends back an information message to the employee.
+     * Only one active reservation is allowed for a day from an employee.
+     * @param reservationDto built based on the request
+     *                       containing employeeID and requested date
+     * @return understandable message to the employee
+     */
 
     public String createNewReservation(ReservationDto reservationDto) {
         String state = "";
@@ -62,6 +72,64 @@ public class OfficeManagementService {
         return state;
     }
 
+    public boolean validateReservationRequest(Employee employee, LocalDate day) {
+        boolean valid = true;
+        if (employee == null) {
+            logger.warn("Invalid ID, no reservation was created.");
+            valid = false;
+        }
+        if (day.isBefore(LocalDate.now())) {
+            logger.warn("Invalid day, no reservation was created.");
+            valid = false;
+        }
+        //Assumption: Weekend days are valid as well.
+        return valid;
+    }
+
+    private boolean checkForAlreadyExistingReservation(LocalDate day, Employee employee) {
+        DailyList dailyList = createDailyListIfMissing(day);
+        Reservation reservationToSearch = new Reservation(employee, day);
+        List<Reservation> reservationList = dailyList.getReservationList();
+        boolean exists = reservationList.contains(reservationToSearch);
+        if (exists) {
+            logger.info("Your reservation was not created, you already have reservations for this day.");
+        }
+        return exists;
+    }
+
+    private DailyList createDailyListIfMissing(LocalDate day) {
+        Map<LocalDate, DailyList> reservationsLists = office.getReservationsLists();
+        if (!reservationsLists.containsKey(day)) {
+            DailyList dailyList = new DailyList();
+            reservationsLists.put(day, dailyList);
+            dailyListRepository.save(dailyList);
+            return dailyList;
+        }
+        return reservationsLists.get(day);
+    }
+
+    private Reservation connectDailyListAndReservation(LocalDate day, Reservation reservation) {
+        DailyList dailyList = office.getReservationsLists().get(day);
+        dailyListService.setDailyList(dailyList);
+        dailyListService.addReservation(reservation);
+        reservation.setDailyList(dailyList);
+        Reservation successfulReservation = reservationRepository.save(reservation);
+        return successfulReservation;
+    }
+
+    //========================= STATUS ENDPOINT ================================
+
+    /**
+     * Based on a request created in frontend the application can send the
+     * appropriate message to the employee. If the employee can not enter the office
+     * immediately, the position of the reservation in the waiting list will be
+     * communicated as well.
+     * Position 1 means: if somebody leaves the office, you can enter.
+     * @param employeeID
+     * @return status text
+     */
+
+
     public String getReservationStatus(Long employeeID) {
         LocalDate day = LocalDate.now();
         Map<LocalDate, DailyList> reservationsLists = office.getReservationsLists();
@@ -80,77 +148,12 @@ public class OfficeManagementService {
         return reservationStatus;
     }
 
-    public boolean requestEntryToOffice(Long employeeId) {
-        fetchDailyListFromService();
-        boolean entered = dailyListService.enterOffice(employeeId);
-        return entered;
-    }
-
-
-    public void exitOffice(Long employeeId) {
-        fetchDailyListFromService();
-        dailyListService.exitOffice(employeeId);
-
-    }
-
-    private void fetchDailyListFromService() {
-        LocalDate day = LocalDate.now();
-        DailyList dailyList = office.getReservationsLists().get(day);
-        dailyListService.setDailyList(dailyList);
-    }
-
-    public void fillEmployees() {
-        for (int i = 0; i < 100; i++) {
-            Employee employee = new Employee();
-            employee.setName("Employee" + i);
-            office.addEmployee(employee);
-            employeeRepository.save(employee);
-        }
-        logger.info("Added " + office.getStaff().size() + " employees to database");
-    }
-
-
-    //============ HELPER METHODS ==========
-
-    public boolean validateReservationRequest(Employee employee, LocalDate day) {
-        boolean valid = true;
-
+    private String checkIfEmployeeIsValid(Long employeeID, String reservationStatus) {
+        Employee employee = findEmployeeInStaff(employeeID);
         if (employee == null) {
-            logger.warn("Invalid ID, no reservation was created.");
-            valid = false;
+            reservationStatus = "Invalid ID, we can not present a valid status.";
         }
-        if (day.isBefore(LocalDate.now())) {
-            logger.warn("Invalid day, no reservation was created.");
-            valid = false;
-        }
-        //Assumption: Weekend days are valid as well.
-
-        return valid;
-    }
-
-    private boolean checkForAlreadyExistingReservation(LocalDate day, Employee employee) {
-        DailyList dailyList = createDailyListIfMissing(day);
-
-        Reservation reservationToSearch = new Reservation(employee, day);
-        List<Reservation> reservationList = dailyList.getReservationList();
-        boolean exists = reservationList.contains(reservationToSearch);
-        if (exists) {
-            logger.info("Your reservation was not created, you already have reservations for this day.");
-        }
-        return exists;
-    }
-
-    private DailyList createDailyListIfMissing(LocalDate day) {
-        Map<LocalDate, DailyList> reservationsLists = office.getReservationsLists();
-
-        if (!reservationsLists.containsKey(day)) {
-            DailyList dailyList = new DailyList();
-            reservationsLists.put(day, dailyList);
-            dailyListRepository.save(dailyList);
-            return dailyList;
-        }
-        return reservationsLists.get(day);
-
+        return reservationStatus;
     }
 
     public Employee findEmployeeInStaff(Long employeeID) {
@@ -167,27 +170,59 @@ public class OfficeManagementService {
             logger.warn("No employee in office staff");
         }
         return tempEmp;
-
     }
 
 
-    private Reservation connectDailyListAndReservation(LocalDate day, Reservation reservation) {
+
+    //========================= ENTRY ENDPOINT ================================
+
+    /**
+     * If an employee wants to enter, the application will check the validity
+     * of the request.
+     * @param employeeId
+     * @return
+     */
+
+    public boolean requestEntryToOffice(Long employeeId) {
+        fetchDailyListFromService();
+        boolean entered = dailyListService.enterOffice(employeeId);
+        return entered;
+    }
+
+
+
+    //========================= EXIT ENDPOINT ================================
+
+    /**
+     * If an employee wants to exit, the application will always allow it.
+     * @param employeeId
+     */
+
+    public void exitOffice(Long employeeId) {
+        fetchDailyListFromService();
+        dailyListService.exitOffice(employeeId);
+    }
+
+    private void fetchDailyListFromService() {
+        LocalDate day = LocalDate.now();
         DailyList dailyList = office.getReservationsLists().get(day);
         dailyListService.setDailyList(dailyList);
-        dailyListService.addReservation(reservation);
-        reservation.setDailyList(dailyList);
-        Reservation successfulReservation = reservationRepository.save(reservation);
-        return successfulReservation;
     }
 
+    //========================= OTHER METHODS ================================
 
-    private String checkIfEmployeeIsValid(Long employeeID, String reservationStatus) {
-        Employee employee = findEmployeeInStaff(employeeID);
-        if (employee == null) {
-            reservationStatus = "Invalid ID, we can not present a valid status.";
+    public void fillEmployees() {
+        for (int i = 0; i < 100; i++) {
+            Employee employee = new Employee();
+            employee.setName("Employee" + i);
+            office.addEmployee(employee);
+            employeeRepository.save(employee);
         }
-        return reservationStatus;
+        logger.info("Added " + office.getStaff().size() + " employees to database");
     }
+
+
+    //========================= GETTERS ================================
 
     public EmployeeRepository getEmployeeRepository() {
         return employeeRepository;

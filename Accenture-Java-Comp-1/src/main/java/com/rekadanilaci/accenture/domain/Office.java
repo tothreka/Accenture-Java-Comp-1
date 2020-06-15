@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Component
 public class Office {
-    private static Office office = new Office();
+    // private static Office office = new Office();
     private DailyListRepository dailyListRepository;
 
     /**
