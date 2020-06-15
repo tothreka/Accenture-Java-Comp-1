@@ -67,7 +67,11 @@ public class OfficeManagementService {
                 } else {
                     state = "Reservation creation error";
                 }
+            } else {
+                state = "Reservation already exist";
             }
+        } else {
+            state = "Invalid reservation";
         }
         return state;
     }

@@ -26,13 +26,11 @@ class OfficeManagementServiceTest {
 
     @Test
     public void makeEmployeesTest() {
-        // officeManagementService.fillEmployees();
         Assertions.assertEquals(300, officeManagementService.getOffice().getStaff().size());
     }
 
     @Test
     public void newReservationGood() {
-        // officeManagementService.fillEmployees();
         Long employeeId = officeManagementService.getOffice().getStaff().get(15).getId();
         ReservationDto reservationDto = new ReservationDto(employeeId, LocalDate.now());
         String saveMessage = officeManagementService.createNewReservation(reservationDto);
