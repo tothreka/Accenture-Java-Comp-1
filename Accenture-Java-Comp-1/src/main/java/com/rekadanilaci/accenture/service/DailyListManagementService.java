@@ -57,7 +57,7 @@ public class DailyListManagementService {
      * @param reservation
      * @return
      */
-//itt van hiba
+
     public boolean addReservation(Reservation reservation) {
         List<Reservation> reservationList = dailyList.getReservationList();
         boolean isCreated = true;

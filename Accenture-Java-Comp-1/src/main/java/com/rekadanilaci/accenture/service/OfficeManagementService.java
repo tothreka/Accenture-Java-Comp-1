@@ -41,9 +41,9 @@ public class OfficeManagementService {
     //========================= REGISTER ENDPOINT ================================
 
     /**
-     * When an employee starts a reservation, the below method manages the request
-     * and sends back an information message to the employee.
-     * Only one active reservation is allowed for a day from an employee.
+     * When an employee starts to create a reservation, the below method manages
+     * the request and sends back an information message to the employee.
+     * Only one active reservation is allowed for a given day from an employee.
      * @param reservationDto built based on the request
      *                       containing employeeID and requested date
      * @return understandable message to the employee
@@ -122,14 +122,13 @@ public class OfficeManagementService {
         dailyListService.addReservation(reservation);
         reservation.setDailyList(dailyList);
         Reservation successfulReservation = reservationRepository.save(reservation);
-
         return successfulReservation;
     }
 
     //========================= STATUS ENDPOINT ================================
 
     /**
-     * Based on a request created in frontend the application can send the
+     * Based on a request created in the frontend the application can send the
      * appropriate message to the employee. If the employee can not enter the office
      * immediately, the position of the reservation in the waiting list will be
      * communicated as well.
