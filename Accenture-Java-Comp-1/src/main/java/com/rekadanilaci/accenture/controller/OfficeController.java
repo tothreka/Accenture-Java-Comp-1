@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/office")
 public class OfficeController {
@@ -23,11 +25,19 @@ public class OfficeController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    //TODO ezt le kell cserélni
     @GetMapping("/{employeeId}")
     public ResponseEntity getStatus(@PathVariable Long employeeId) {
         String status = officeService.getReservationStatus(employeeId);
         return new ResponseEntity(status, HttpStatus.OK);
     }
+
+    @GetMapping("/reservations/{employeeId}")
+    public ResponseEntity getReservationList(@PathVariable Long employeeId) {
+        List<ReservationDto> reservationList = officeService.getReservationList(employeeId);
+        return new ResponseEntity(reservationList, HttpStatus.OK);
+    }
+
 
     @GetMapping("/entry/{employeeId}")
     public ResponseEntity requestEntry(@PathVariable Long employeeId) {

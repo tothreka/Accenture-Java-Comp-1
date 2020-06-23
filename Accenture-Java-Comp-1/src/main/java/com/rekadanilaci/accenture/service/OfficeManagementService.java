@@ -235,6 +235,10 @@ public class OfficeManagementService {
     }
 
 
+    public List<ReservationDto> getReservationList(Long employeeId) {
+        return null;
+    }
+
     //========================= GETTERS ================================
 
     public EmployeeRepository getEmployeeRepository() {
