@@ -1,6 +1,5 @@
 package com.rekadanilaci.accenture;
 
-import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,6 +17,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AccentureJavaComp1Application {
+
+    public static final String DATE_FORMAT = "yyyy.MM.dd";
 
     public static void main(String[] args) {
         SpringApplication.run(AccentureJavaComp1Application.class, args);

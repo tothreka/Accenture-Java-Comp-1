@@ -1,7 +1,8 @@
 package com.rekadanilaci.accenture.service;
 
 import com.rekadanilaci.accenture.domain.*;
-import com.rekadanilaci.accenture.dto.ReservationDto;
+import com.rekadanilaci.accenture.dto.ReservationDataItem;
+import com.rekadanilaci.accenture.dto.ReservationItem;
 import com.rekadanilaci.accenture.repository.DailyListRepository;
 import com.rekadanilaci.accenture.repository.EmployeeRepository;
 import com.rekadanilaci.accenture.repository.ReservationRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,15 +45,16 @@ public class OfficeManagementService {
      * When an employee starts to create a reservation, the below method manages
      * the request and sends back an information message to the employee.
      * Only one active reservation is allowed for a given day from an employee.
-     * @param reservationDto built based on the request
-     *                       containing employeeID and requested date
+     *
+     * @param reservationItem built based on the request
+     *                        containing employeeID and requested date
      * @return understandable message to the employee
      */
 
-    public String createNewReservation(ReservationDto reservationDto) {
+    public String createNewReservation(ReservationItem reservationItem) {
         String state = "";
-        Long employeeId = reservationDto.getPerson();
-        LocalDate day = reservationDto.getDay();
+        Long employeeId = reservationItem.getPerson();
+        LocalDate day = reservationItem.getDay();
         Employee employee = findEmployeeInStaff(employeeId);
         state = "employee found " + employee.getName();
         if (validateReservationRequest(employee, day)) {
@@ -132,6 +135,7 @@ public class OfficeManagementService {
      * immediately, the position of the reservation in the waiting list will be
      * communicated as well.
      * Position 1 means: if somebody leaves the office, you can enter.
+     *
      * @param employeeID
      * @return status text
      */
@@ -180,12 +184,12 @@ public class OfficeManagementService {
     }
 
 
-
     //========================= ENTRY ENDPOINT ================================
 
     /**
      * If an employee wants to enter, the application will check the validity
      * of the request.
+     *
      * @param employeeId
      * @return
      */
@@ -197,11 +201,11 @@ public class OfficeManagementService {
     }
 
 
-
     //========================= EXIT ENDPOINT ================================
 
     /**
      * If an employee wants to exit, the application will always allow it.
+     *
      * @param employeeId
      */
 
@@ -235,8 +239,17 @@ public class OfficeManagementService {
     }
 
 
-    public List<ReservationDto> getReservationList(Long employeeId) {
-        return null;
+    public List<ReservationDataItem> getReservationList(Long employeeId) {
+        List<ReservationDataItem> reservationDataItemList = new ArrayList<>();
+        Employee employee = employeeRepository.getOne(employeeId);
+        for (Reservation reservation : office.getReservationsLists().get(LocalDate.now()).getReservationList()) {
+            if (reservation.getEmployee().getId().equals(employeeId)) {
+                ReservationDataItem reservationDataItem = new ReservationDataItem(reservation);
+                reservationDataItemList.add(reservationDataItem);
+            }
+        }
+
+        return reservationDataItemList;
     }
 
     //========================= GETTERS ================================

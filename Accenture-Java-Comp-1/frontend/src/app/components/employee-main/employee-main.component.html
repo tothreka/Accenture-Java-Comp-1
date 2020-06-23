@@ -1,7 +1,16 @@
 <div class="container">
   <div id="currentReservations">
     <h2>My reservations</h2>
-
+    <table>
+      <tr *ngFor="let reservation of reservations">
+        <td>
+          {{reservation.day}}
+        </td>
+        <td>
+          {{reservation.reservationStatus}}
+        </td>
+      </tr>
+    </table>
   </div>
 
 

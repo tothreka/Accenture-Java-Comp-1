@@ -3,7 +3,7 @@ package com.rekadanilaci.accenture;
 import com.rekadanilaci.accenture.domain.Employee;
 import com.rekadanilaci.accenture.domain.Reservation;
 import com.rekadanilaci.accenture.domain.ReservationStatus;
-import com.rekadanilaci.accenture.dto.ReservationDto;
+import com.rekadanilaci.accenture.dto.ReservationItem;
 import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -47,8 +47,8 @@ class OfficeManagementServiceTest {
     @Test
     public void newGoodReservationTest() {
         Long employeeId = officeManagementService.getOffice().getStaff().get(15).getId();
-        ReservationDto reservationDto = new ReservationDto(employeeId, today);
-        String saveMessage = officeManagementService.createNewReservation(reservationDto);
+        ReservationItem reservationItem = new ReservationItem(employeeId, today);
+        String saveMessage = officeManagementService.createNewReservation(reservationItem);
         Assertions.assertEquals("Created", saveMessage);
         Assertions.assertEquals(1, officeManagementService.getOffice().getReservationsLists().size());
         officeManagementService.getOffice().getReservationsLists().clear();
@@ -58,8 +58,8 @@ class OfficeManagementServiceTest {
     public void newInvalidReservationForYesterdayTest() {
         LocalDate yesterday = today.minusDays(1);
         Long employeeId = officeManagementService.getOffice().getStaff().get(15).getId();
-        ReservationDto reservationDto = new ReservationDto(employeeId, yesterday);
-        String saveMessage = officeManagementService.createNewReservation(reservationDto);
+        ReservationItem reservationItem = new ReservationItem(employeeId, yesterday);
+        String saveMessage = officeManagementService.createNewReservation(reservationItem);
         Assertions.assertEquals("Invalid reservation", saveMessage);
         Assertions.assertEquals(0, officeManagementService.getOffice().getReservationsLists().size());
     }
@@ -67,10 +67,10 @@ class OfficeManagementServiceTest {
     @Test
     public void newInvalidReservationForAlreadyExistingTest() {
         Long employeeId = officeManagementService.getOffice().getStaff().get(15).getId();
-        ReservationDto reservationDto = new ReservationDto(employeeId, today);
-        ReservationDto reservationDtoDoubled = new ReservationDto(employeeId, today);
-        officeManagementService.createNewReservation(reservationDto);
-        String saveMessage = officeManagementService.createNewReservation(reservationDtoDoubled);
+        ReservationItem reservationItem = new ReservationItem(employeeId, today);
+        ReservationItem reservationItemDoubled = new ReservationItem(employeeId, today);
+        officeManagementService.createNewReservation(reservationItem);
+        String saveMessage = officeManagementService.createNewReservation(reservationItemDoubled);
         Assertions.assertEquals("Reservation already exist", saveMessage);
         Assertions.assertEquals(1, officeManagementService.getOffice().getReservationsLists().size());
         officeManagementService.getOffice().getReservationsLists().clear();
@@ -86,8 +86,8 @@ class OfficeManagementServiceTest {
     @Test
     public void getStatusCanEnterTest() {
         Long employeeId = officeManagementService.getOffice().getStaff().get(0).getId();
-        ReservationDto reservationDto = new ReservationDto(employeeId, today);
-        officeManagementService.createNewReservation(reservationDto);
+        ReservationItem reservationItem = new ReservationItem(employeeId, today);
+        officeManagementService.createNewReservation(reservationItem);
         Assertions.assertEquals("You can enter the office, there is free place.", officeManagementService.getReservationStatus(employeeId));
         officeManagementService.getOffice().getReservationsLists().clear();
     }
@@ -95,10 +95,10 @@ class OfficeManagementServiceTest {
     @Test
     public void getStatusEnrolledTest() {
         officeManagementService.getOffice().setNewCapacity(2);
-        ReservationDto reservationDto;
+        ReservationItem reservationItem;
         for (int i = 0; i < 6; i++) {
-            reservationDto = new ReservationDto(officeManagementService.getOffice().getStaff().get(i).getId(), today);
-            officeManagementService.createNewReservation(reservationDto);
+            reservationItem = new ReservationItem(officeManagementService.getOffice().getStaff().get(i).getId(), today);
+            officeManagementService.createNewReservation(reservationItem);
         }
         Assertions.assertEquals("You are in the position 1 now in the waiting list for the given day.", officeManagementService.getReservationStatus(officeManagementService.getOffice().getStaff().get(5).getId()));
         officeManagementService.getOffice().getReservationsLists().clear();
@@ -108,8 +108,8 @@ class OfficeManagementServiceTest {
     public void enterOfficeTest() {
         List<Employee> staff = officeManagementService.getOffice().getStaff();
         Long employeeId = staff.get(0).getId();
-        ReservationDto reservationDto = new ReservationDto(employeeId, today);
-        officeManagementService.createNewReservation(reservationDto);
+        ReservationItem reservationItem = new ReservationItem(employeeId, today);
+        officeManagementService.createNewReservation(reservationItem);
         Assertions.assertTrue(officeManagementService.requestEntryToOffice(employeeId));
 
         Reservation reservation = officeManagementService.getOffice().getReservationsLists().get(LocalDate.now())
@@ -123,11 +123,11 @@ class OfficeManagementServiceTest {
     @Test
     public void leftOfficeTest() {
         Long employeeId = officeManagementService.getOffice().getStaff().get(0).getId();
-        ReservationDto reservationDto = new ReservationDto(employeeId, today);
-        officeManagementService.createNewReservation(reservationDto);
+        ReservationItem reservationItem = new ReservationItem(employeeId, today);
+        officeManagementService.createNewReservation(reservationItem);
         Reservation reservation = officeManagementService.getOffice().getReservationsLists().get(LocalDate.now())
                 .getReservationList().get(0);
-        officeManagementService.createNewReservation(reservationDto);
+        officeManagementService.createNewReservation(reservationItem);
         officeManagementService.requestEntryToOffice(employeeId);
         officeManagementService.exitOffice(employeeId);
         Assertions.assertEquals(ReservationStatus.LEFT_OFFICE, reservation.getReservationStatus());

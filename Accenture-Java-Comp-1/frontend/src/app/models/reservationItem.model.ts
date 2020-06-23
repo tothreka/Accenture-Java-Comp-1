@@ -1,6 +1,6 @@
 export interface ReservationItemModel {
   id: number,
-  employee: string,
+  employee: number,
   day: string,
   reservationStatus: string
 }

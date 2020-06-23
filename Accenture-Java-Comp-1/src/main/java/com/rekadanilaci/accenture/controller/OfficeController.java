@@ -1,6 +1,7 @@
 package com.rekadanilaci.accenture.controller;
 
-import com.rekadanilaci.accenture.dto.ReservationDto;
+import com.rekadanilaci.accenture.dto.ReservationDataItem;
+import com.rekadanilaci.accenture.dto.ReservationItem;
 import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class OfficeController {
     }
 
     @PostMapping
-    public ResponseEntity addReservation(@RequestBody ReservationDto reservationDto) {
-        officeService.createNewReservation(reservationDto);
+    public ResponseEntity addReservation(@RequestBody ReservationItem reservationItem) {
+        officeService.createNewReservation(reservationItem);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -34,7 +35,7 @@ public class OfficeController {
 
     @GetMapping("/reservations/{employeeId}")
     public ResponseEntity getReservationList(@PathVariable Long employeeId) {
-        List<ReservationDto> reservationList = officeService.getReservationList(employeeId);
+        List<ReservationDataItem> reservationList = officeService.getReservationList(employeeId);
         return new ResponseEntity(reservationList, HttpStatus.OK);
     }
 

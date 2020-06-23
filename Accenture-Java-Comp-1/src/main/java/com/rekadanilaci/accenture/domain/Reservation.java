@@ -70,8 +70,11 @@ public class Reservation {
         return reservationStatus;
     }
 
+    public LocalDate getDay() {
+        return day;
+    }
 
-    //====================== SETTERS ========================
+//====================== SETTERS ========================
 
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
