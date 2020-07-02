@@ -13,8 +13,4 @@ export class AdminLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //TODO
-  adminLogin() {
-
-  }
 }

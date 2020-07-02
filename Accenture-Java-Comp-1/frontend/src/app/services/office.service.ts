@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {ReservationItemModel} from "../models/reservationItem.model";
 
 const BASE_URL = "http://localhose:8080/api/office";
 
@@ -14,7 +12,7 @@ export class OfficeService {
   }
 
 
-  fetchCurrentReservationsOfEmployee(employeeId: number): Observable<Array<ReservationItemModel>> {
+  /*fetchCurrentReservationsOfEmployee(employeeId: number): Observable<Array<ReservationItemModel>> {
     return this.https.get<Array<ReservationItemModel>>(`${BASE_URL}/reservations/${employeeId}`)
-  }
+  }*/
 }

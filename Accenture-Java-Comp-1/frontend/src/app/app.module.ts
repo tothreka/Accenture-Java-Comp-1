@@ -5,11 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {RoleChooserComponent} from './components/role-chooser/role-chooser.component';
 import {EmployeeLoginComponent} from './components/employee-login/employee-login.component';
-import {AdminLoginComponent} from './components/admin-login/admin-login.component';
 import {AdminMainComponent} from './components/admin-main/admin-main.component';
 import {EmployeeMainComponent} from './components/employee-main/employee-main.component';
 import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import {AdminLoginComponent} from "./components/admin-login/admin-login.component";
 
 @NgModule({
   declarations: [
@@ -19,12 +20,14 @@ import {HttpClientModule} from "@angular/common/http";
     AdminLoginComponent,
     AdminMainComponent,
     EmployeeMainComponent,
-    NavBarComponent
+    NavBarComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

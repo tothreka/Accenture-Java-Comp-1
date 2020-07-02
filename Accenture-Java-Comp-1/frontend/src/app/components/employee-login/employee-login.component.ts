@@ -13,8 +13,4 @@ export class EmployeeLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //TODO
-  employeeLogin() {
-
-  }
 }
