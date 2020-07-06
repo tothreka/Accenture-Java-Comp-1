@@ -1,7 +1,6 @@
 package com.rekadanilaci.accenture.domain;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * We assumed that only employees can enter the office in working hours,
@@ -33,6 +32,12 @@ public class Employee {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "password")
+    private String password;
+
+    @ManyToOne
+    private Admin admin;
 
 
     public Employee(String name) {

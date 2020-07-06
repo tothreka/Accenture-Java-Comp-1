@@ -1,8 +1,10 @@
 package com.rekadanilaci.accenture.service;
 
 import com.rekadanilaci.accenture.domain.*;
+import com.rekadanilaci.accenture.dto.AdminDataItem;
 import com.rekadanilaci.accenture.dto.ReservationDataItem;
 import com.rekadanilaci.accenture.dto.ReservationItem;
+import com.rekadanilaci.accenture.repository.AdminRepository;
 import com.rekadanilaci.accenture.repository.DailyListRepository;
 import com.rekadanilaci.accenture.repository.EmployeeRepository;
 import com.rekadanilaci.accenture.repository.ReservationRepository;
@@ -26,14 +28,16 @@ public class OfficeManagementService {
     private DailyListManagementService dailyListService;
     private ReservationRepository reservationRepository;
     private EmployeeRepository employeeRepository;
+    private AdminRepository adminRepository;
 
     @Autowired
-    public OfficeManagementService(DailyListRepository dailyListRepository, Office office, DailyListManagementService dailyListService, ReservationRepository reservationRepository, EmployeeRepository employeeRepository) {
+    public OfficeManagementService(DailyListRepository dailyListRepository, Office office, DailyListManagementService dailyListService, ReservationRepository reservationRepository, EmployeeRepository employeeRepository, AdminRepository adminRepository) {
         this.dailyListRepository = dailyListRepository;
         this.office = office;
         this.dailyListService = dailyListService;
         this.reservationRepository = reservationRepository;
         this.employeeRepository = employeeRepository;
+        this.adminRepository = adminRepository;
     }
 
     public OfficeManagementService() {
@@ -250,6 +254,13 @@ public class OfficeManagementService {
         }
 
         return reservationDataItemList;
+    }
+
+    public AdminDataItem getAdminById(Long adminId) {
+        Admin adminEntity = adminRepository.getOne(adminId);
+        AdminDataItem adminDataItem = new AdminDataItem(adminEntity);
+
+        return adminDataItem;
     }
 
     //========================= GETTERS ================================
