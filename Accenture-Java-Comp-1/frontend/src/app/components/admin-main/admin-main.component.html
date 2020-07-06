@@ -1,1 +1,39 @@
-<p>admin-main works!</p>
+<div class="container">
+  <h2>Welcome {{admin?.name}}!</h2>
+
+  <div class="container">
+    <p>List of employees:</p>
+    <table>
+      <tr *ngFor="let employee of admin?.employeeList">
+        <td>{{employee.id}}</td>
+        <td>{{employee.name}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="container">
+    <button (click)="showEmployeeRegistration = true" class="btn-outline-info" type="button">Register new employee
+    </button>
+    <div *ngIf="showEmployeeRegistration" class="container">
+      <form [formGroup]="employeeRegistrationForm">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            formControlName="name"
+            id="name"
+            name="name"
+            type="text">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            formControlName="password"
+            id="password"
+            name="password"
+            type="text">
+        </div>
+        <button (click)="registerEmployee()" class="btn-outline-info">Register Employee</button>
+      </form>
+    </div>
+  </div>
+</div>

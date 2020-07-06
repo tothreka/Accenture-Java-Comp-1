@@ -1,4 +1,5 @@
 export interface EmployeeRegistrationModel {
-  id: number,
-  name: string;
+  name: string,
+  password: string,
+  adminId: number;
 }

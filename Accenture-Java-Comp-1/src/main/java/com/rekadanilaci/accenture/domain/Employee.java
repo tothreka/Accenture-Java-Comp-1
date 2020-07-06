@@ -6,16 +6,16 @@ import javax.persistence.*;
  * We assumed that only employees can enter the office in working hours,
  * thus, only these objects (Employees) must be handled by the application
  * as potential users of the office.
- *
+ * <p>
  * The task description did not define the needed fields, thus, we tried to
  * keep the things as simple as possible, and only one field (name) was
  * introduced. It must contain first name + last name as well. The list
  * of fields can be extended later if needed.
- *
+ * <p>
  * ID will be given to the employees by the application itself automatically,
  * one ID will be never used again. Thus, the application can be used
  * for retrospective backtracking as well.
- *
+ * <p>
  * Important : The entry cards must know the ID of their owners. The base of
  * the identification is the ID, not the name. (The same name can occur
  * many times at bigger companies.)
@@ -58,5 +58,23 @@ public class Employee {
         return name;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

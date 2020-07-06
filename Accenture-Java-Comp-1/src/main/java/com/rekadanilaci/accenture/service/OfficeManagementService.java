@@ -1,9 +1,7 @@
 package com.rekadanilaci.accenture.service;
 
 import com.rekadanilaci.accenture.domain.*;
-import com.rekadanilaci.accenture.dto.AdminDataItem;
-import com.rekadanilaci.accenture.dto.ReservationDataItem;
-import com.rekadanilaci.accenture.dto.ReservationItem;
+import com.rekadanilaci.accenture.dto.*;
 import com.rekadanilaci.accenture.repository.AdminRepository;
 import com.rekadanilaci.accenture.repository.DailyListRepository;
 import com.rekadanilaci.accenture.repository.EmployeeRepository;
@@ -256,11 +254,30 @@ public class OfficeManagementService {
         return reservationDataItemList;
     }
 
-    public AdminDataItem getAdminById(Long adminId) {
+    public AdminLoginItem getAdminForLoginById(Long adminId) {
         Admin adminEntity = adminRepository.getOne(adminId);
-        AdminDataItem adminDataItem = new AdminDataItem(adminEntity);
+        AdminLoginItem adminDataItem = new AdminLoginItem(adminEntity);
 
         return adminDataItem;
+    }
+
+    public AdminDataItem fetchAdminData(Long id) {
+        Admin adminEntity = adminRepository.getOne(id);
+        AdminDataItem admin = new AdminDataItem(adminEntity);
+        return admin;
+    }
+
+    public void addNewEmployee(EmployeeRegistrationItem employeeRegistrationItem) {
+        Employee employee = new Employee();
+        employee.setName(employeeRegistrationItem.getName());
+        employee.setPassword(employeeRegistrationItem.getPassword());
+        Admin admin = adminRepository.getOne(employeeRegistrationItem.getAdminId());
+        employee.setAdmin(admin);
+
+        employeeRepository.save(employee);
+        admin.getManagedEmployees().add(employee);
+        logger.info("Employee added to database: " + employee.getName() + "/" + employee.getId() + "/" + employee.getAdmin());
+
     }
 
     //========================= GETTERS ================================

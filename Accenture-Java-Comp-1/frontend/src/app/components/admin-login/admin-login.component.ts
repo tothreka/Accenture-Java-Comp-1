@@ -24,11 +24,18 @@ export class AdminLoginComponent implements OnInit {
   }
 
   login() {
-    let admin = this.adminLogin.value;
-    this.officeService.verifyAdmin(admin).subscribe(
+    let adminLoginData = this.adminLogin.value;
+    let adminId = this.adminLogin.get('id').value;
+
+    this.officeService.verifyAdmin(adminLoginData).subscribe(
       () => {
-        localStorage.setItem('admin', admin);
-        this.router.navigate(['/adminMain']);
+        this.officeService.fetchAdminData(adminId).subscribe(
+          adminData => {
+            localStorage.setItem('admin', JSON.stringify(adminData));
+            this.router.navigate(['/adminMain'])
+          },
+          error =>
+            console.log(error))
       },
       error => {
         this.adminLogin.reset();
