@@ -50,4 +50,16 @@ public class OfficeController {
         boolean exit = officeService.exitOffice(reservationDataItem, reservationId);
         return exit ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/update/{employeeId}")
+    public ResponseEntity updateReservationList(@RequestBody List<ReservationDataItem> resList, @PathVariable Long employeeId) {
+        List<ReservationDataItem> reservationList = officeService.updateReservationList(employeeId, resList);
+        return reservationList != null ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity checkIfReservationExists(@RequestBody ReservationItem reservationItemToCheck) {
+        boolean exists = officeService.checkIfReservationExists(reservationItemToCheck);
+        return new ResponseEntity(exists, HttpStatus.OK);
+    }
 }

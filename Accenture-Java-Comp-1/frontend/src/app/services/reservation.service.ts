@@ -30,4 +30,12 @@ export class ReservationService {
   leaveOffice(reservation: ReservationItemModel, id: number) {
     return this.https.put(BASE_URL + "/leave/" + id, reservation);
   }
+
+  updateReservationList(employeeId: number, resList: Array<ReservationItemModel>) {
+    return this.https.put(BASE_URL + "/update/" + employeeId, resList);
+  }
+
+  checkExistingReservation(newReservation: NewReservationModel) {
+    return this.https.post(BASE_URL + "/check/", newReservation);
+  }
 }

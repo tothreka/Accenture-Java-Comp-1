@@ -62,18 +62,14 @@ public class OfficeManagementService {
 
         if (validateReservationRequest(employee, day)) {
             logger.info("Valid reservation");
-            if (!checkForAlreadyExistingReservation(day, employee)) {
-                logger.info("Reservation does not exist");
-                Reservation reservation = new Reservation(employee, day);
-                reservationDataItem = new ReservationDataItem(reservation);
-                if (connectDailyListAndReservation(day, reservation) != null) {
-                    logger.info("Created");
-                } else {
-                    logger.info("Reservation creation error");
-                }
+            Reservation reservation = new Reservation(employee, day);
+            reservationDataItem = new ReservationDataItem(reservation);
+            if (connectDailyListAndReservation(day, reservation) != null) {
+                logger.info("Created");
             } else {
-                logger.info("Reservation already exist");
+                logger.info("Reservation creation error");
             }
+
         } else {
             logger.info("Invalid reservation");
         }
@@ -219,8 +215,9 @@ public class OfficeManagementService {
     /**
      * If an employee wants to enter, the application will check the validity
      * of the request.
+     * <p>
+     * //   * @param employeeId
      *
-     //   * @param employeeId
      * @return
      */
 
@@ -235,8 +232,8 @@ public class OfficeManagementService {
 
     /**
      * If an employee wants to exit, the application will always allow it.
-     *
-     //     * @param employeeId
+     * <p>
+     * //     * @param employeeId
      */
 
     public boolean exitOffice(ReservationDataItem reservationDataItem, Long reservationId) {
@@ -277,6 +274,12 @@ public class OfficeManagementService {
             reservationDataItemList.add(reservationDataItem);
         }
         return reservationDataItemList;
+    }
+
+    public List<ReservationDataItem> updateReservationList(Long employeeId, List<ReservationDataItem> resList) {
+        List<ReservationDataItem> reservationList = getReservationList(employeeId);
+        resList = reservationList;
+        return resList;
     }
 
     public AdminLoginItem getAdminForLoginById(Long adminId) {
@@ -337,6 +340,24 @@ public class OfficeManagementService {
         EmployeeDataItem employeeDataItem = new EmployeeDataItem(one);
 
         return employeeDataItem;
+    }
+
+    public boolean checkIfReservationExists(ReservationItem reservationItemToCheck) {
+        DailyList dailyList = createDailyListIfMissing(reservationItemToCheck.getDay());
+        boolean exists = false;
+        LocalDate day = reservationItemToCheck.getDay();
+        Long employeeId = reservationItemToCheck.getPerson();
+        List<Reservation> resList = reservationRepository.getReservationByEmployee_Id(employeeId);
+        for (Reservation reservation : resList) {
+            if (reservation.getDay().equals(day) && !reservation.getReservationStatus().equals(ReservationStatus.LEFT_OFFICE)) {
+                exists = true;
+                logger.info("Reservation does not exists");
+            }
+        }
+        if (!exists) {
+            logger.info("Reservation already exists");
+        }
+        return exists;
     }
 
     //========================= GETTERS ================================

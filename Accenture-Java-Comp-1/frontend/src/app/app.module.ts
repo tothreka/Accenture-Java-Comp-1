@@ -11,6 +11,7 @@ import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AdminLoginComponent} from "./components/admin-login/admin-login.component";
+import {NewReservationFormComponent} from './components/new-reservation-form/new-reservation-form.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {AdminLoginComponent} from "./components/admin-login/admin-login.componen
     AdminMainComponent,
     EmployeeMainComponent,
     NavBarComponent,
+    NewReservationFormComponent,
 
   ],
   imports: [

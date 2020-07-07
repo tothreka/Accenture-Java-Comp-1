@@ -1,21 +1,7 @@
 <div class="container">
   <h2>Welcome back {{employee.name}}</h2>
-  <button (click)="showReservationForm = true" class="btn-info">New reservation</button>
-  <div *ngIf="showReservationForm" class="container">
-    <form [formGroup]="newReservationForm">
-      <div class="form-group">
-        <label
-          for="day">
-          Choose the day:
-        </label>
-        <input formControlName="day"
-               id="day"
-               name="day"
-               type="date">
-      </div>
-    </form>
-    <button (click)="createNewReservation()" class="btn-info">Create reservation</button>
-  </div>
+  <app-new-reservation-form
+    (createReservation)="update(employee.reservationList, employeeId)"></app-new-reservation-form>
   <div class="container">
     <table>
       <thead>

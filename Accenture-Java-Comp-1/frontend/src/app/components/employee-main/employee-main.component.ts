@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {EmployeeDataModel} from "../../models/employeeData.model";
 import {OfficeService} from "../../services/office.service";
 import {FormControl, FormGroup} from "@angular/forms";
-import {NewReservationModel} from "../../models/newReservation.model";
 import {ReservationService} from "../../services/reservation.service";
 import {ActivatedRoute} from "@angular/router";
 import {ReservationItemModel} from "../../models/reservationItem.model";
@@ -14,10 +13,8 @@ import {ReservationItemModel} from "../../models/reservationItem.model";
 })
 export class EmployeeMainComponent implements OnInit {
   employee: EmployeeDataModel;
-  showReservationForm: boolean = false;
   newReservationForm: FormGroup;
-  newReservation: NewReservationModel;
-  private employeeId: number;
+  employeeId: number;
 
   constructor(private officeService: OfficeService, private reservationService: ReservationService, private activatedRoute: ActivatedRoute) {
     this.newReservationForm = new FormGroup({
@@ -50,21 +47,6 @@ export class EmployeeMainComponent implements OnInit {
     )
   }
 
-
-  createNewReservation() {
-    this.newReservation = {
-      'day': this.newReservationForm.get('day').value,
-      'person': this.employee.id
-    };
-    this.reservationService.makeReservation(this.newReservation).subscribe(
-      reservationItem => {
-        let newReservationItem: ReservationItemModel;
-        newReservationItem = reservationItem;
-        this.employee.reservationList.push(newReservationItem);
-      }
-    )
-  }
-
   enterOffice(reservation: ReservationItemModel) {
     reservation.reservationStatus = "ENTERED_OFFICE";
     this.reservationService.enterOffice(reservation, reservation.id).subscribe(
@@ -73,7 +55,7 @@ export class EmployeeMainComponent implements OnInit {
           .setAttribute("disabled", "disabled");
       },
       error => {
-
+        console.log(error)
       });
   }
 
@@ -95,5 +77,15 @@ export class EmployeeMainComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  update(resList: Array<ReservationItemModel>, employeeId: number) {
+    this.reservationService.updateReservationList(employeeId, this.employee.reservationList).subscribe(
+      updatedList => {
+        this.employee.reservationList = <Array<ReservationItemModel>>updatedList;
+        console.log("Reservation list updated");
+        location.reload();
+      }
+    )
   }
 }
