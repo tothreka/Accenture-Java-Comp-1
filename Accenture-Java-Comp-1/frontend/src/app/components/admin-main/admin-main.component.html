@@ -2,12 +2,31 @@
   <h2>Welcome {{admin?.name}}!</h2>
 
   <div class="container">
-    <p>List of employees:</p>
+    <p (click)="showEmployees()">Show employees</p>
     <table>
       <tr *ngFor="let employee of admin?.employeeList">
+
         <td>{{employee.id}}</td>
         <td>{{employee.name}}</td>
+        <td (click)="showReservationsBlock = true; setCurrentEmployee(employee)"><b>reservations</b></td>
       </tr>
+    </table>
+  </div>
+
+  <div *ngIf="showReservationsBlock" id="reservationsBlock">
+    <p>Reservations of {{currentEmployee.name}}</p>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Day</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tr *ngFor="let reservation of currentEmployee.reservationList">
+        <td>{{reservation.id}}</td>
+        <td>{{reservation.day}}</td>
+        <td>{{reservation.reservationStatus}}</td>
     </table>
   </div>
 
@@ -32,7 +51,9 @@
             name="password"
             type="text">
         </div>
-        <button (click)="registerEmployee()" class="btn-outline-info">Register Employee</button>
+        <button (click)="registerEmployee(); showEmployeeRegistration = false" class="btn-outline-info">Register
+          Employee
+        </button>
       </form>
     </div>
   </div>

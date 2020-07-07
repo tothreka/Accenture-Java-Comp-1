@@ -1,8 +1,6 @@
 package com.rekadanilaci.accenture.controller;
 
-import com.rekadanilaci.accenture.dto.AdminDataItem;
-import com.rekadanilaci.accenture.dto.AdminLoginItem;
-import com.rekadanilaci.accenture.dto.EmployeeRegistrationItem;
+import com.rekadanilaci.accenture.dto.*;
 import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +30,7 @@ public class StaffController {
         return new ResponseEntity(exists ? HttpStatus.OK : HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("admin/{id}")
+    @GetMapping("/admin/{id}")
     public ResponseEntity fetchAdminData(@PathVariable Long id) {
         AdminDataItem adminById = officeService.fetchAdminData(id);
         return new ResponseEntity(adminById, HttpStatus.OK);
@@ -40,7 +38,20 @@ public class StaffController {
 
     @PostMapping("/register")
     public ResponseEntity registerNewEmployee(@RequestBody EmployeeRegistrationItem employeeRegistrationItem) {
-        officeService.addNewEmployee(employeeRegistrationItem);
-        return new ResponseEntity(HttpStatus.CREATED);
+        EmployeeDataItem employeeDataItem = officeService.addNewEmployee(employeeRegistrationItem);
+        return new ResponseEntity(employeeDataItem, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/employee/login")
+    public ResponseEntity verifyEMployeeFromDb(@RequestBody EmployeeLoginItem employeeLoginItem) {
+        boolean exists = officeService.getEmployeeForLoginById(employeeLoginItem.getId()) != null;
+
+        return new ResponseEntity(exists ? HttpStatus.OK : HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/employee/{id}")
+    public ResponseEntity fetchEmployeeData(@PathVariable Long id) {
+        EmployeeDataItem employeeDataItem = officeService.fetchEmployeeData(id);
+        return new ResponseEntity(employeeDataItem, HttpStatus.OK);
     }
 }

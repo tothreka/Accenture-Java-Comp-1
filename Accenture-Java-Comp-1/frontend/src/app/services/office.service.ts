@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AdminLoginDataModel} from "../models/adminLoginData.model";
 import {EmployeeRegistrationModel} from "../models/employeeRegistration.model";
+import {EmployeeLoginDataModel} from "../models/employeeLoginData.model";
 
 const BASE_URL = "http://localhost:8080/api/staff";
 
@@ -24,5 +25,16 @@ export class OfficeService {
 
   registerEmployee(newEmployeeData: EmployeeRegistrationModel) {
     return this.https.post(BASE_URL + "/register", newEmployeeData);
+  }
+
+  /*getEmployeeData(newEmployeeData: EmployeeRegistrationModel) {
+    return this.https.get(BASE_URL + "/employee/" + newEmployeeData);
+  }*/
+  verifyEmployee(employeeLoginData: EmployeeLoginDataModel): Observable<any> {
+    return this.https.post(BASE_URL + "/employee/login", employeeLoginData)
+  }
+
+  fetchEmployeeData(id: number): Observable<any> {
+    return this.https.get(BASE_URL + "/employee/" + id)
   }
 }

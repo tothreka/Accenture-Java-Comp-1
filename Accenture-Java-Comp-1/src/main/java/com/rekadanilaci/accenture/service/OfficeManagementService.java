@@ -267,17 +267,50 @@ public class OfficeManagementService {
         return admin;
     }
 
-    public void addNewEmployee(EmployeeRegistrationItem employeeRegistrationItem) {
+    public EmployeeDataItem addNewEmployee(EmployeeRegistrationItem employeeRegistrationItem) {
         Employee employee = new Employee();
-        employee.setName(employeeRegistrationItem.getName());
-        employee.setPassword(employeeRegistrationItem.getPassword());
-        Admin admin = adminRepository.getOne(employeeRegistrationItem.getAdminId());
-        employee.setAdmin(admin);
+        Admin admin = setEmployeeData(employeeRegistrationItem, employee);
 
         employeeRepository.save(employee);
         admin.getManagedEmployees().add(employee);
         logger.info("Employee added to database: " + employee.getName() + "/" + employee.getId() + "/" + employee.getAdmin());
 
+        EmployeeDataItem employeeDataItem = new EmployeeDataItem(employee);
+        setReservationListForEmployeeDataItem(employeeDataItem);
+
+        return employeeDataItem;
+    }
+
+    private Admin setEmployeeData(EmployeeRegistrationItem employeeRegistrationItem, Employee employee) {
+        employee.setName(employeeRegistrationItem.getName());
+        employee.setPassword(employeeRegistrationItem.getPassword());
+        Admin admin = adminRepository.getOne(employeeRegistrationItem.getAdminId());
+        employee.setAdmin(admin);
+        return admin;
+    }
+
+    private void setReservationListForEmployeeDataItem(EmployeeDataItem employeeDataItem) {
+        List<Reservation> reservationByEmployee_id = reservationRepository.getReservationByEmployee_Id(employeeDataItem.getId());
+        List<ReservationDataItem> reservationDataItems = new ArrayList<>();
+        for (Reservation reservation : reservationByEmployee_id) {
+            ReservationDataItem reservationDataItem = new ReservationDataItem(reservation);
+            reservationDataItems.add(reservationDataItem);
+        }
+        employeeDataItem.setReservationList(reservationDataItems);
+    }
+
+    public EmployeeLoginItem getEmployeeForLoginById(Long employeeId) {
+        Employee employee = employeeRepository.getOne(employeeId);
+        EmployeeLoginItem employeeLoginItem = new EmployeeLoginItem(employee);
+
+        return employeeLoginItem;
+    }
+
+    public EmployeeDataItem fetchEmployeeData(Long id) {
+        Employee one = employeeRepository.getOne(id);
+        EmployeeDataItem employeeDataItem = new EmployeeDataItem(one);
+
+        return employeeDataItem;
     }
 
     //========================= GETTERS ================================

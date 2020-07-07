@@ -1,1 +1,26 @@
-<p>employee-login works!</p>
+<div class="page-container">
+  <h2>Enter as employee</h2>
+  <hr/>
+  <form [formGroup]="employeeLoginForm">
+    <div class="form-control">
+
+      <label for="id">
+        Employee ID
+      </label>
+      <input
+        formControlName="id"
+        id="id"
+        name="id"
+        type="text">
+      <label for="password">
+        Password
+      </label>
+      <input
+        formControlName="password"
+        id="password"
+        name="password"
+        type="text">
+    </div>
+    <button (click)="login()" class="btn btn-primary" type="submit">Enter</button>
+  </form>
+</div>
