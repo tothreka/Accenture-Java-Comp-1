@@ -16,4 +16,24 @@
     </form>
     <button (click)="createNewReservation()" class="btn-info">Create reservation</button>
   </div>
+  <div class="container">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Day</th>
+        <th>Status</th>
+        <th>Change status</th>
+      </tr>
+      </thead>
+      <tr *ngFor="let reservation of employee.reservationList">
+        <td>{{reservation.id}}</td>
+        <td>{{reservation.day}}</td>
+        <td>{{reservation.reservationStatus}}</td>
+        <td>
+          <button (click)="showChangeIcons()">+</button>
+        </td>
+    </table>
+  </div>
+
 </div>
