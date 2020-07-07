@@ -53,6 +53,34 @@ public class OfficeManagementService {
      * @return understandable message to the employee
      */
 
+    public ReservationDataItem addNewReservation(ReservationItem reservationItem) {
+        ReservationDataItem reservationDataItem = null;
+        Long employeeId = reservationItem.getPerson();
+        LocalDate day = reservationItem.getDay();
+        Employee employee = findEmployeeInStaff(employeeId);
+        logger.info("employee found " + employee.getName());
+
+        if (validateReservationRequest(employee, day)) {
+            logger.info("Valid reservation");
+            if (!checkForAlreadyExistingReservation(day, employee)) {
+                logger.info("Reservation does not exist");
+                Reservation reservation = new Reservation(employee, day);
+                reservationDataItem = new ReservationDataItem(reservation);
+                if (connectDailyListAndReservation(day, reservation) != null) {
+                    logger.info("Created");
+                } else {
+                    logger.info("Reservation creation error");
+                }
+            } else {
+                logger.info("Reservation already exist");
+            }
+        } else {
+            logger.info("Invalid reservation");
+        }
+        return reservationDataItem;
+    }
+
+    //test purposes
     public String createNewReservation(ReservationItem reservationItem) {
         String state = "";
         Long employeeId = reservationItem.getPerson();
@@ -111,7 +139,7 @@ public class OfficeManagementService {
 
     private DailyList createDailyListIfMissing(LocalDate day) {
         Map<LocalDate, DailyList> reservationsLists = office.getReservationsLists();
-        if (!reservationsLists.containsKey(day)) {
+        if (!reservationsLists.containsKey(day) || reservationsLists.size() == 0) {
             DailyList dailyList = new DailyList();
             reservationsLists.put(day, dailyList);
             dailyListRepository.save(dailyList);
@@ -243,14 +271,11 @@ public class OfficeManagementService {
 
     public List<ReservationDataItem> getReservationList(Long employeeId) {
         List<ReservationDataItem> reservationDataItemList = new ArrayList<>();
-        Employee employee = employeeRepository.getOne(employeeId);
-        for (Reservation reservation : office.getReservationsLists().get(LocalDate.now()).getReservationList()) {
-            if (reservation.getEmployee().getId().equals(employeeId)) {
-                ReservationDataItem reservationDataItem = new ReservationDataItem(reservation);
-                reservationDataItemList.add(reservationDataItem);
-            }
+        List<Reservation> reservationsOfEmployee = reservationRepository.getReservationByEmployee_Id(employeeId);
+        for (Reservation reservation : reservationsOfEmployee) {
+            ReservationDataItem reservationDataItem = new ReservationDataItem(reservation);
+            reservationDataItemList.add(reservationDataItem);
         }
-
         return reservationDataItemList;
     }
 
@@ -273,6 +298,7 @@ public class OfficeManagementService {
 
         employeeRepository.save(employee);
         admin.getManagedEmployees().add(employee);
+        office.getStaff().add(employee);
         logger.info("Employee added to database: " + employee.getName() + "/" + employee.getId() + "/" + employee.getAdmin());
 
         EmployeeDataItem employeeDataItem = new EmployeeDataItem(employee);

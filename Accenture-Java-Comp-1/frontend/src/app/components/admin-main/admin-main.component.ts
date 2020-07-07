@@ -4,6 +4,8 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {EmployeeRegistrationModel} from "../../models/employeeRegistration.model";
 import {OfficeService} from "../../services/office.service";
 import {EmployeeDataModel} from "../../models/employeeData.model";
+import {ReservationItemModel} from "../../models/reservationItem.model";
+import {ReservationService} from "../../services/reservation.service";
 
 @Component({
   selector: 'app-admin-main',
@@ -20,7 +22,7 @@ export class AdminMainComponent implements OnInit {
   receivedEmployeeDta: EmployeeDataModel;
   employeeList: Array<EmployeeDataModel>;
 
-  constructor(private officeService: OfficeService) {
+  constructor(private officeService: OfficeService, private reservationService: ReservationService) {
     this.employeeRegistrationForm = new FormGroup({
       'name': new FormControl(''),
       'password': new FormControl('')
@@ -59,16 +61,20 @@ export class AdminMainComponent implements OnInit {
 
   setCurrentEmployee(employee: EmployeeDataModel) {
     this.currentEmployee = employee;
-    debugger;
-    for (let item of this.currentEmployee.reservationList) {
-      console.log(item.id);
-      console.log(item.day);
-      console.log(item.reservationStatus);
-    }
+    this.reservationService.fetchReservationsOfCurrentEmployee(employee.id).subscribe(
+      reservationList => {
+        this.currentEmployee.reservationList = <Array<ReservationItemModel>>reservationList;
+        console.log(this.currentEmployee.reservationList.length);
+        for (let item of this.currentEmployee.reservationList) {
+          console.log("ID:" + item.id);
+          console.log("DAY" + item.day);
+          console.log("STATUS" + item.reservationStatus);
+        }
+      })
+
   }
 
   showEmployees() {
-    debugger;
     this.employeeList = this.admin.employeeList;
   }
 }

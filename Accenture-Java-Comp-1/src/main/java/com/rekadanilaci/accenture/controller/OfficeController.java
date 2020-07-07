@@ -22,7 +22,7 @@ public class OfficeController {
 
     @PostMapping
     public ResponseEntity addReservation(@RequestBody ReservationItem reservationItem) {
-        officeService.createNewReservation(reservationItem);
+        officeService.addNewReservation(reservationItem);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

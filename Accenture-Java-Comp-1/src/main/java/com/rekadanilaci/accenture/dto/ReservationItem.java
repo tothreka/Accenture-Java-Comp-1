@@ -11,6 +11,9 @@ public class ReservationItem {
         this.day = day;
     }
 
+    public ReservationItem() {
+    }
+
     //============================== GETTERS ==============================
 
     public Long getPerson() {

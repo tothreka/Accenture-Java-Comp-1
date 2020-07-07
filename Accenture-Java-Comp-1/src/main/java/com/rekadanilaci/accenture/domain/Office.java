@@ -1,6 +1,6 @@
 package com.rekadanilaci.accenture.domain;
 
-import com.rekadanilaci.accenture.repository.DailyListRepository;
+import com.rekadanilaci.accenture.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +19,8 @@ import java.util.Map;
 @Component
 public class Office {
 
-    private DailyListRepository dailyListRepository;
-
+    private final Admin admin;
+    private AdminRepository adminRepository;
     /**
      * The maximum number of available places if the office works with full capacity.
      * It is a constant according to the task description.
@@ -49,11 +49,12 @@ public class Office {
     private Map<LocalDate, DailyList> reservationsLists = new HashMap<>();
 
     @Autowired
-    public Office(DailyListRepository dailyListRepository) {
-        this.dailyListRepository = dailyListRepository;
-    }
+    public Office(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
+        List<Employee> managedEmployeesByAdmin = new ArrayList<>();
+        this.admin = new Admin("Admin", "admin", managedEmployeesByAdmin);
+        this.adminRepository.save(this.admin);
 
-    public Office() {
     }
 
 
