@@ -22,6 +22,9 @@ public class ReservationDataItem {
         this.reservationStatus = reservation.getReservationStatus().toString();
     }
 
+    public ReservationDataItem() {
+    }
+
     public Long getId() {
         return id;
     }

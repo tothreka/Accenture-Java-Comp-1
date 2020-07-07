@@ -1,8 +1,5 @@
 package com.rekadanilaci.accenture;
 
-import com.rekadanilaci.accenture.domain.Employee;
-import com.rekadanilaci.accenture.domain.Reservation;
-import com.rekadanilaci.accenture.domain.ReservationStatus;
 import com.rekadanilaci.accenture.dto.ReservationItem;
 import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.junit.jupiter.api.AfterEach;
@@ -15,7 +12,6 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -104,7 +100,7 @@ class OfficeManagementServiceTest {
         officeManagementService.getOffice().getReservationsLists().clear();
     }
 
-    @Test
+   /* @Test
     public void enterOfficeTest() {
         List<Employee> staff = officeManagementService.getOffice().getStaff();
         Long employeeId = staff.get(0).getId();
@@ -133,7 +129,7 @@ class OfficeManagementServiceTest {
         Assertions.assertEquals(ReservationStatus.LEFT_OFFICE, reservation.getReservationStatus());
         officeManagementService.getOffice().getReservationsLists().clear();
     }
-
+*/
 
 
 }

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {NewReservationModel} from "../models/newReservation.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ReservationItemModel} from "../models/reservationItem.model";
 
 
 const BASE_URL = "http://localhost:8080/api/office";
@@ -20,5 +21,13 @@ export class ReservationService {
 
   fetchReservationsOfCurrentEmployee(id: number) {
     return this.https.get(BASE_URL + "/reservations/" + id);
+  }
+
+  enterOffice(reservation: ReservationItemModel, id: number): Observable<any> {
+    return this.https.put(BASE_URL + "/enter/" + id, reservation);
+  }
+
+  leaveOffice(reservation: ReservationItemModel, id: number) {
+    return this.https.put(BASE_URL + "/leave/" + id, reservation);
   }
 }

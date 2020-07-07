@@ -58,12 +58,42 @@ export class EmployeeMainComponent implements OnInit {
     };
     this.reservationService.makeReservation(this.newReservation).subscribe(
       reservationItem => {
-        this.employee.reservationList.push(reservationItem);
+        let newReservationItem: ReservationItemModel;
+        newReservationItem = reservationItem;
+        this.employee.reservationList.push(newReservationItem);
       }
     )
   }
 
-  showChangeIcons() {
+  enterOffice(reservation: ReservationItemModel) {
+    reservation.reservationStatus = "ENTERED_OFFICE";
+    this.reservationService.enterOffice(reservation, reservation.id).subscribe(
+      () => {
+        document.getElementById("enter")
+          .setAttribute("disabled", "disabled");
+      },
+      error => {
 
+      });
+  }
+
+  leaveOffice(reservation: ReservationItemModel) {
+    reservation.reservationStatus = "LEFT_OFFICE";
+    this.reservationService.leaveOffice(reservation, reservation.id).subscribe(
+      () => {
+
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  isReservationClosed(reservation: ReservationItemModel): boolean {
+    let status = reservation.reservationStatus;
+    if (status.valueOf() != 'LEFT_OFFICE') {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

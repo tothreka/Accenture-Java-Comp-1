@@ -27,12 +27,20 @@
       </tr>
       </thead>
       <tr *ngFor="let reservation of employee.reservationList">
-        <td>{{reservation.id}}</td>
-        <td>{{reservation.day}}</td>
-        <td>{{reservation.reservationStatus}}</td>
-        <td>
-          <button (click)="showChangeIcons()">+</button>
-        </td>
+        <div *ngIf="isReservationClosed(reservation)">
+          <td>{{reservation.id}}</td>
+          <td>{{reservation.day}}</td>
+          <td>{{reservation.reservationStatus}}</td>
+          <td>
+            <nav aria-label="change-status">
+              <ul class="pagination">
+                <li class="page-item"><a (click)="enterOffice(reservation)" class="page-link" id="enter">ENTER
+                  OFFICE</a></li>
+                <li class="page-item"><a (click)="leaveOffice(reservation)" class="page-link">LEAVE OFFICE</a></li>
+              </ul>
+            </nav>
+          </td>
+        </div>
     </table>
   </div>
 

@@ -39,16 +39,15 @@ public class OfficeController {
         return new ResponseEntity(reservationList, HttpStatus.OK);
     }
 
-
-    @GetMapping("/entry/{employeeId}")
-    public ResponseEntity requestEntry(@PathVariable Long employeeId) {
-        boolean canEntry = officeService.requestEntryToOffice(employeeId);
-        return new ResponseEntity(canEntry, HttpStatus.OK);
+    @PutMapping("/enter/{reservationId}")
+    public ResponseEntity requestEntry(@RequestBody ReservationDataItem reservationDataItem, @PathVariable Long reservationId) {
+        boolean canEntry = officeService.requestEntryToOffice(reservationDataItem, reservationId);
+        return canEntry ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/exit/{employeeId}")
-    public ResponseEntity exitOffice(@PathVariable Long employeeId) {
-        boolean exit = officeService.exitOffice(employeeId);
-        return new ResponseEntity(exit, HttpStatus.OK);
+    @PutMapping("/leave/{reservationId}")
+    public ResponseEntity exitOffice(@RequestBody ReservationDataItem reservationDataItem, @PathVariable Long reservationId) {
+        boolean exit = officeService.exitOffice(reservationDataItem, reservationId);
+        return exit ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

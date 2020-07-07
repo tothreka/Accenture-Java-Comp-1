@@ -3,6 +3,7 @@ package com.rekadanilaci.accenture.service;
 import com.rekadanilaci.accenture.domain.DailyList;
 import com.rekadanilaci.accenture.domain.Reservation;
 import com.rekadanilaci.accenture.domain.ReservationStatus;
+import com.rekadanilaci.accenture.dto.ReservationDataItem;
 import com.rekadanilaci.accenture.repository.DailyListRepository;
 import com.rekadanilaci.accenture.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,17 +85,13 @@ public class DailyListManagementService {
      * @return
      */
 
-    public boolean enterOffice(Long employeeId) {
+    public boolean enterOffice(ReservationDataItem reservationDataItem, Long reservationId) {
         boolean entered = false;
-        List<Reservation> reservationList = dailyList.getReservationList();
-        for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId().equals(employeeId) &&
-                    reservation.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
-                reservationRepository.getOne(reservation.getId())
-                        .setReservationStatus(ReservationStatus.ENTERED_OFFICE);
 
-                entered = true;
-            }
+        Reservation reservationToChange = reservationRepository.getOne(reservationId);
+        if (reservationToChange.getReservationStatus().equals(ReservationStatus.ENROLLED)) {
+            reservationToChange.setReservationStatus(ReservationStatus.valueOf(reservationDataItem.getReservationStatus()));
+            entered = true;
         }
         return entered;
     }
@@ -105,19 +102,14 @@ public class DailyListManagementService {
      * @param employeeId
      */
 
-    public boolean exitOffice(Long employeeId) {
-        boolean exited = false;
-        List<Reservation> reservationList = dailyList.getReservationList();
-        for (Reservation reservation : reservationList) {
-            if (reservation.getEmployee().getId().equals(employeeId) &&
-                    reservationRepository.getOne(reservation.getId())
-                            .getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
-                reservationRepository.getOne(reservation.getId())
-                        .setReservationStatus(ReservationStatus.LEFT_OFFICE);
-                exited = true;
-            }
+    public boolean exitOffice(ReservationDataItem reservationDataItem, Long reservationId) {
+        boolean left = false;
+        Reservation reservationToChange = reservationRepository.getOne(reservationId);
+        if (reservationToChange.getReservationStatus().equals(ReservationStatus.ENTERED_OFFICE)) {
+            reservationToChange.setReservationStatus(ReservationStatus.valueOf(reservationDataItem.getReservationStatus()));
+            left = true;
         }
-        return exited;
+        return left;
     }
 
 

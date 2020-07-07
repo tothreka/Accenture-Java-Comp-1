@@ -220,13 +220,13 @@ public class OfficeManagementService {
      * If an employee wants to enter, the application will check the validity
      * of the request.
      *
-     * @param employeeId
+     //   * @param employeeId
      * @return
      */
 
-    public boolean requestEntryToOffice(Long employeeId) {
+    public boolean requestEntryToOffice(ReservationDataItem reservationDataItem, Long reservationId) {
         fetchDailyListFromService();
-        boolean entered = dailyListService.enterOffice(employeeId);
+        boolean entered = dailyListService.enterOffice(reservationDataItem, reservationId);
         return entered;
     }
 
@@ -236,12 +236,12 @@ public class OfficeManagementService {
     /**
      * If an employee wants to exit, the application will always allow it.
      *
-     * @param employeeId
+     //     * @param employeeId
      */
 
-    public boolean exitOffice(Long employeeId) {
+    public boolean exitOffice(ReservationDataItem reservationDataItem, Long reservationId) {
         fetchDailyListFromService();
-        boolean exited = dailyListService.exitOffice(employeeId);
+        boolean exited = dailyListService.exitOffice(reservationDataItem, reservationId);
         return exited;
     }
 
