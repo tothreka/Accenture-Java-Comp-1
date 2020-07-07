@@ -31,13 +31,13 @@ export class LoginService {
     this.loginStatus.next();
   }
 
-  logout() {
+  /*logout() {
     this.http.post(BASE_URL + '/logout', {}).subscribe(() => {
       localStorage.removeItem('admin');
-      this.router.navigateByUrl('/roles');
+      this.router.navigateByUrl('/');
       this.updateLoginStatus();
     });
-  }
+  }*/
 
 //TODO
   /*getCurrentUser(): LoggedInUserInfo {
