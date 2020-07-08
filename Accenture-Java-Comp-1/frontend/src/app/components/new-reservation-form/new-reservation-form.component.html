@@ -1,16 +1,25 @@
-<button (click)="showReservationForm = true" class="btn-info">New reservation</button>
-<div *ngIf="showReservationForm" class="container">
-  <form [formGroup]="newReservationForm">
-    <div class="form-group">
-      <label
-        for="day">
-        Choose the day:
-      </label>
-      <input formControlName="day"
-             id="day"
-             name="day"
-             type="date">
+<div class="container">
+  <div class="container" style="padding-bottom: 30px; padding-top: 30px; width: 50%">
+    <button (click)="showReservationForm = true" *ngIf="!showReservationForm" class="btn btn-outline-danger"
+            type="button">New reservation
+    </button>
+    <div *ngIf="showReservationForm">
+      <form [formGroup]="newReservationForm" class="form">
+        <div class="form-group">
+          <label
+            for="day">
+            Choose the day:
+          </label>
+          <input class="form-control"
+                 formControlName="day"
+                 id="day"
+                 name="day"
+                 type="date">
+        </div>
+      </form>
+      <button (click)="createNewReservation()" class="btn btn-outline-danger" type="button" type="button">Create
+        reservation
+      </button>
     </div>
-  </form>
-  <button (click)="createNewReservation()" class="btn-info">Create reservation</button>
+  </div>
 </div>

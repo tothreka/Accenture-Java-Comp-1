@@ -1,32 +1,32 @@
-<div class="container">
-  <h2>Welcome back {{employee.name}}</h2>
+<div class="page-container">
+  <h2 class="h1">Welcome<small> {{employee.name}}!</small></h2>
   <app-new-reservation-form
     (createReservation)="update(employee.reservationList, employeeId)"></app-new-reservation-form>
   <div class="container">
-    <table>
+    <table class="table">
       <thead>
       <tr>
-        <th>ID</th>
-        <th>Day</th>
-        <th>Status</th>
-        <th>Change status</th>
+        <th scope="col">ID</th>
+        <th scope="col">Day</th>
+        <th scope="col">Status</th>
+        <th scope="col">Change status</th>
       </tr>
       </thead>
+      <tbody>
       <tr *ngFor="let reservation of employee.reservationList">
-        <div *ngIf="isReservationClosed(reservation)">
-          <td>{{reservation.id}}</td>
-          <td>{{reservation.day}}</td>
-          <td>{{reservation.reservationStatus}}</td>
-          <td>
-            <nav aria-label="change-status">
-              <ul class="pagination">
-                <li class="page-item"><a (click)="enterOffice(reservation)" class="page-link" id="enter">ENTER
-                  OFFICE</a></li>
-                <li class="page-item"><a (click)="leaveOffice(reservation)" class="page-link">LEAVE OFFICE</a></li>
-              </ul>
-            </nav>
-          </td>
-        </div>
+        <th *ngIf="isReservationClosed(reservation)" scope="row">{{reservation.id}}</th>
+        <td *ngIf="isReservationClosed(reservation)">{{reservation.day}}</td>
+        <td *ngIf="isReservationClosed(reservation)">{{reservation.reservationStatus}}</td>
+        <td *ngIf="isReservationClosed(reservation)">
+          <nav aria-label="change-status">
+            <ul class="pagination">
+              <li class="page-item"><a (click)="enterOffice(reservation)" class="page-link" id="enter">ENTER
+                OFFICE</a></li>
+              <li class="page-item"><a (click)="leaveOffice(reservation)" class="page-link">LEAVE OFFICE</a></li>
+            </ul>
+          </nav>
+        </td>
+      </tbody>
     </table>
   </div>
 

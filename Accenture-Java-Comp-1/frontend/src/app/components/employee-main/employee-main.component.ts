@@ -26,6 +26,12 @@ export class EmployeeMainComponent implements OnInit {
     this.employee = JSON.parse(localStorage.getItem('employee'));
     this.employeeId = this.employee.id;
     this.fetchEmployeeData(this.employeeId);
+
+  }
+
+  deleteLeftOfficeStatusRes() {
+    let reservationList = this.employee.reservationList;
+
   }
 
   fetchEmployeeData(id: number) {
