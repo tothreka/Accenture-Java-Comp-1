@@ -9,6 +9,9 @@
         <td>{{employee.id}}</td>
         <td>{{employee.name}}</td>
         <td (click)="showReservationsBlock = true; setCurrentEmployee(employee)"><b>reservations</b></td>
+        <td>
+          <button (click)="employeeDataEmitter.emit(currentEmployee)" class="btn-info">Edit</button>
+        </td>
       </tr>
     </table>
   </div>
@@ -57,4 +60,7 @@
       </form>
     </div>
   </div>
+  <!-- <app-edit-employee *ngIf="showEditPanel"></app-edit-employee> -->
+
+  <app-admin-today-numbers></app-admin-today-numbers>
 </div>

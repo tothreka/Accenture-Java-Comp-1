@@ -32,6 +32,7 @@ export class EmployeeMainComponent implements OnInit {
     this.officeService.fetchEmployeeData(id).subscribe(
       data => {
         this.employee = data;
+        localStorage.setItem('employee', JSON.stringify(this.employee));
       },
       error => {
         console.log(error)
@@ -53,6 +54,7 @@ export class EmployeeMainComponent implements OnInit {
       () => {
         document.getElementById("enter")
           .setAttribute("disabled", "disabled");
+
       },
       error => {
         console.log(error)

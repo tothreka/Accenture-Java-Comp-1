@@ -38,4 +38,8 @@ export class ReservationService {
   checkExistingReservation(newReservation: NewReservationModel) {
     return this.https.post(BASE_URL + "/check/", newReservation);
   }
+
+  fetchReservationsForToday(): Observable<any> {
+    return this.https.get(BASE_URL + "/today");
+  }
 }

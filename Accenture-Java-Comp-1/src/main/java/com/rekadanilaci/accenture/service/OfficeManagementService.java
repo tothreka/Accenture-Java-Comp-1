@@ -360,6 +360,24 @@ public class OfficeManagementService {
         return exists;
     }
 
+    public Employee updateEmployee(EmployeeDataItem employeeDataItem, Long employeeId) {
+        Employee employee = employeeRepository.getOne(employeeId);
+        employee.setName(employeeDataItem.getName());
+        employee.setPassword(employeeDataItem.getPassword());
+        return employee;
+    }
+
+    public List<ReservationDataItem> getReservationsForToday() {
+        createDailyListIfMissing(LocalDate.now());
+        List<ReservationDataItem> today = new ArrayList<>();
+        List<Reservation> reservationByDay = reservationRepository.getReservationByDay(LocalDate.now());
+        for (Reservation reservation : reservationByDay) {
+            ReservationDataItem reservationDataItem = new ReservationDataItem(reservation);
+            today.add(reservationDataItem);
+        }
+        return today;
+    }
+
     //========================= GETTERS ================================
 
     public EmployeeRepository getEmployeeRepository() {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AdminItemDataModel} from "../../models/adminItemData.model";
 import {FormControl, FormGroup} from "@angular/forms";
 import {EmployeeRegistrationModel} from "../../models/employeeRegistration.model";
@@ -21,6 +21,10 @@ export class AdminMainComponent implements OnInit {
   currentEmployee: EmployeeDataModel;
   receivedEmployeeDta: EmployeeDataModel;
   employeeList: Array<EmployeeDataModel>;
+  adminId: number;
+  showEditPanel: boolean;
+  @Output() employeeDataEmitter = new EventEmitter;
+  @Input() successfulUpdate: boolean;
 
   constructor(private officeService: OfficeService, private reservationService: ReservationService) {
     this.employeeRegistrationForm = new FormGroup({
@@ -29,10 +33,24 @@ export class AdminMainComponent implements OnInit {
     });
   }
 
+  /*ngOnChange() {
+    if (this.successfulUpdate) {
+      this.showEditPanel = false;
+    }
+  }*/
+
   ngOnInit(): void {
-    this.admin = JSON.parse(localStorage.getItem('admin'));
-    console.log("admin id: " + this.admin.id);
-    console.log("admin name: " + this.admin.name);
+    this.adminId = JSON.parse(localStorage.getItem('admin')).id;
+    this.fetchAdminData(this.adminId);
+  }
+
+  fetchAdminData(adminId: number) {
+    this.officeService.fetchAdminData(this.adminId).subscribe(
+      adminData => {
+        this.admin = adminData;
+        this.employeeList = this.admin.employeeList;
+      }
+    );
   }
 
   registerEmployee() {

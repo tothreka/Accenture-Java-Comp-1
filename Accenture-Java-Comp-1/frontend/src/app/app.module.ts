@@ -12,6 +12,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AdminLoginComponent} from "./components/admin-login/admin-login.component";
 import {NewReservationFormComponent} from './components/new-reservation-form/new-reservation-form.component';
+import {EditEmployeeComponent} from './components/edit-employee/edit-employee.component';
+import {AdminTodayNumbersComponent} from './components/admin-today-numbers/admin-today-numbers.component';
+import {AdminStatisticsComponent} from './components/admin-statistics/admin-statistics.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import {NewReservationFormComponent} from './components/new-reservation-form/new
     EmployeeMainComponent,
     NavBarComponent,
     NewReservationFormComponent,
+    EditEmployeeComponent,
+    AdminTodayNumbersComponent,
+    AdminStatisticsComponent,
 
   ],
   imports: [

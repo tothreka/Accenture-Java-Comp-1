@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>Edit Employee</h2>
+  <form [formGroup]="editEmployeeForm">
+    <div class="form-group">
+      <label for="name">Edit name:</label>
+      <input formControlName="name" id="name" name="name" placeholder="{{employee.name}}">
+      <label for="password">Edit password:</label>
+      <input formControlName="password" id="password" name="password" placeholder="{{employee.password}}">
+    </div>
+    <button (click)="saveEmployee()">Submit</button>
+  </form>
+</div>

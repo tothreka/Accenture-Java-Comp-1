@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {AdminLoginDataModel} from "../models/adminLoginData.model";
 import {EmployeeRegistrationModel} from "../models/employeeRegistration.model";
 import {EmployeeLoginDataModel} from "../models/employeeLoginData.model";
+import {EmployeeDataModel} from "../models/employeeData.model";
 
 const BASE_URL = "http://localhost:8080/api/staff";
 
@@ -38,4 +39,7 @@ export class OfficeService {
     return this.https.get(BASE_URL + "/employee/" + id)
   }
 
+  updateEmployeeData(employeeData: EmployeeDataModel, employeeId: number): Observable<any> {
+    return this.https.put(BASE_URL + "/employee/update/" + employeeId, employeeData);
+  }
 }
