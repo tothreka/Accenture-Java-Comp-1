@@ -14,4 +14,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> getReservationByDay(LocalDate day);
 
+    List<Reservation> getAllBy();
 }

@@ -378,6 +378,17 @@ public class OfficeManagementService {
         return today;
     }
 
+    public List<ReservationListItem> getAllReservationFromDb() {
+        List<Reservation> all = reservationRepository.findAll();
+        List<ReservationListItem> list = new ArrayList<>();
+        for (Reservation reservation : all) {
+            ReservationListItem item = new ReservationListItem(reservation);
+            list.add(item);
+        }
+
+        return list;
+    }
+
     //========================= GETTERS ================================
 
     public EmployeeRepository getEmployeeRepository() {

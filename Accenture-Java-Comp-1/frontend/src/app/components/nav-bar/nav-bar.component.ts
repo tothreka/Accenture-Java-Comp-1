@@ -7,15 +7,20 @@ import {Router} from "@angular/router";
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+  adminLoggedIn: boolean = false;
+
 
   constructor(private router: Router) {
   }
 
   ngOnInit(): void {
+    if (location.href.includes("admin")) {
+      this.adminLoggedIn = true;
+    }
   }
 
   logout() {
-    if (location.href.includes("admin")) {
+    if (location.href.includes("admin") || location.href.includes("reservations")) {
       localStorage.removeItem('admin');
       this.router.navigate(['']);
       console.log("Logged out az admin");

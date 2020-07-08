@@ -4,6 +4,7 @@ import com.rekadanilaci.accenture.domain.Employee;
 import com.rekadanilaci.accenture.dto.EmployeeDataItem;
 import com.rekadanilaci.accenture.dto.ReservationDataItem;
 import com.rekadanilaci.accenture.dto.ReservationItem;
+import com.rekadanilaci.accenture.dto.ReservationListItem;
 import com.rekadanilaci.accenture.service.OfficeManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,5 +76,11 @@ public class OfficeController {
     public ResponseEntity getReservationsForToday() {
         List<ReservationDataItem> enrolledReservationsForToday = officeService.getReservationsForToday();
         return new ResponseEntity(enrolledReservationsForToday, HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity getAllReservation() {
+        List<ReservationListItem> all = officeService.getAllReservationFromDb();
+        return new ResponseEntity(all, HttpStatus.OK);
     }
 }

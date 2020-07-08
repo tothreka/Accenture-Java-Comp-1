@@ -6,6 +6,7 @@ import {OfficeService} from "../../services/office.service";
 import {EmployeeDataModel} from "../../models/employeeData.model";
 import {ReservationItemModel} from "../../models/reservationItem.model";
 import {ReservationService} from "../../services/reservation.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-main',
@@ -26,7 +27,7 @@ export class AdminMainComponent implements OnInit {
   @Output() employeeDataEmitter = new EventEmitter;
   @Input() successfulUpdate: boolean;
 
-  constructor(private officeService: OfficeService, private reservationService: ReservationService) {
+  constructor(private officeService: OfficeService, private reservationService: ReservationService, private router: Router) {
     this.employeeRegistrationForm = new FormGroup({
       'name': new FormControl(''),
       'password': new FormControl('')
@@ -94,6 +95,10 @@ export class AdminMainComponent implements OnInit {
 
   showEmployees() {
     this.employeeList = this.admin.employeeList;
+  }
+
+  goToReservations() {
+    this.router.navigate(["/reservations"]);
   }
 }
 

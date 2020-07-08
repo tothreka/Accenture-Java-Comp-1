@@ -42,4 +42,8 @@ export class ReservationService {
   fetchReservationsForToday(): Observable<any> {
     return this.https.get(BASE_URL + "/today");
   }
+
+  fetchAllReservation(): Observable<any> {
+    return this.https.get(BASE_URL);
+  }
 }
