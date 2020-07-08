@@ -1,13 +1,19 @@
-<div class="container">
-  <p class="p-2">Today</p>
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Enrolled</th>
-      <th>In Office</th>
-    </tr>
-    </thead>
-    <td>{{enrolled}}</td>
-    <td>{{entered}}</td>
-  </table>
+<div class="center">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Today</h1>
+      <h3 class="h4"
+          style="padding-left: 5px">{{currentDate.getFullYear() + "." + currentDate.getMonth() + "." + currentDate.getDate()}}</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Enrolled</th>
+          <th>In Office</th>
+        </tr>
+        </thead>
+        <td>{{enrolled}}</td>
+        <td>{{entered}}</td>
+      </table>
+    </div>
+  </div>
 </div>

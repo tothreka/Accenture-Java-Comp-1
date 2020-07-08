@@ -1,24 +1,55 @@
-<div class="container">
-  <h2>Welcome {{admin?.name}}!</h2>
-  <button (click)="goToReservations()">Reservations</button>
-  <div class="container">
-    <p (click)="showEmployees()">Show employees</p>
-    <table>
-      <tr *ngFor="let employee of admin?.employeeList">
+<div class="page-container">
+  <div class="container-lg">
+    <h2 class="h1">Welcome<small> {{admin?.name}}!</small></h2>
+  </div>
+  <div class="row justify-content-center" style="padding: 20px">
+    <div class="col-4">
+      <p (click)="showEmployees()" class="btn btn-outline-warning btn-rounded waves-effect">Show employees</p>
+    </div>
+    <div class="col-4">
+      <button (click)="goToReservations()" class="btn btn-outline-warning btn-rounded waves-effect">Reservations
+      </button>
+    </div>
+    <div class="col-4">
+      <button (click)="showEmployeeRegistration = true" class="btn btn-outline-warning btn-rounded waves-effect"
+              type="button">Register new employee
+      </button>
+    </div>
+  </div>
 
-        <td>{{employee.id}}</td>
+  <div class="container">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Reservations</th>
+        <th scope="col">Edit</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let employee of admin?.employeeList">
+        <th scope="row">{{employee.id}}</th>
         <td>{{employee.name}}</td>
-        <td (click)="showReservationsBlock = true; setCurrentEmployee(employee)"><b>reservations</b></td>
         <td>
-          <button (click)="employeeDataEmitter.emit(currentEmployee)" class="btn-info">Edit</button>
+          <button (click)="showReservationsBlock = true; setCurrentEmployee(employee)"
+                  class="btn btn-outline-info btn-rounded waves-effect">reservations
+          </button>
+        </td>
+        <td>
+          <button (click)="employeeDataEmitter.emit(currentEmployee)" class="btn btn-info btn-rounded">Edit</button>
         </td>
       </tr>
     </table>
   </div>
 
-  <div *ngIf="showReservationsBlock" id="reservationsBlock">
-    <p>Reservations of {{currentEmployee.name}}</p>
-    <table>
+  <div *ngIf="showReservationsBlock" class="container" id="reservationsBlock">
+    <div><h3>Reservations of {{currentEmployee.name}}</h3>
+      <div style="padding: 10px">
+        <span (click)="showReservationsBlock=false" class="badge badge-pill badge-secondary" type="button">Close</span>
+      </div>
+    </div>
+    <table class="table">
       <thead>
       <tr>
         <th>ID</th>
@@ -27,15 +58,13 @@
       </tr>
       </thead>
       <tr *ngFor="let reservation of currentEmployee.reservationList">
-        <td>{{reservation.id}}</td>
+        <td scope="row">{{reservation.id}}</td>
         <td>{{reservation.day}}</td>
         <td>{{reservation.reservationStatus}}</td>
     </table>
   </div>
 
   <div class="container">
-    <button (click)="showEmployeeRegistration = true" class="btn-outline-info" type="button">Register new employee
-    </button>
     <div *ngIf="showEmployeeRegistration" class="container">
       <form [formGroup]="employeeRegistrationForm">
         <div class="form-group">

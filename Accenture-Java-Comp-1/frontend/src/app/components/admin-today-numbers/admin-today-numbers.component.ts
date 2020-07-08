@@ -11,6 +11,7 @@ export class AdminTodayNumbersComponent implements OnInit {
   resForToday: Array<ReservationItemModel>;
   enrolled: number = 0;
   entered: number = 0;
+  currentDate: Date;
 
 
   constructor(private reservationService: ReservationService) {
@@ -18,6 +19,7 @@ export class AdminTodayNumbersComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchReservationsForToday();
+    this.currentDate = new Date();
   }
 
   fetchReservationsForToday() {
