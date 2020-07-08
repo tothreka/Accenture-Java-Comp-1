@@ -16,13 +16,25 @@
       <tr *ngFor="let reservation of employee.reservationList">
         <th *ngIf="isReservationClosed(reservation)" scope="row">{{reservation.id}}</th>
         <td *ngIf="isReservationClosed(reservation)">{{reservation.day}}</td>
-        <td *ngIf="isReservationClosed(reservation)">{{reservation.reservationStatus}}</td>
+        <td *ngIf="isReservationClosed(reservation)">{{reservation.reservationStatus}}
+          <!--<br>
+          <small *ngIf="reservation.reservationStatus == 'ENROLLED' && position.valueOf() != 0">{{position}}.
+            place</small> --->
+        </td>
         <td *ngIf="isReservationClosed(reservation)">
           <nav aria-label="change-status">
             <ul class="pagination">
-              <li class="page-item"><a (click)="enterOffice(reservation)" class="page-link" id="enter">ENTER
-                OFFICE</a></li>
-              <li class="page-item"><a (click)="leaveOffice(reservation)" class="page-link">LEAVE OFFICE</a></li>
+              <li class="page-item">
+                <button (click)="enterOffice(reservation)" [disabled]="setEnterButtonDisabled(reservation)" id="enter">
+                  ENTER
+                  OFFICE
+                </button>
+              </li>
+              <li class="page-item">
+                <button (click)="leaveOffice(reservation)" [disabled]="setExitButtonDisabled(reservation)" id="exit">
+                  LEAVE OFFICE
+                </button>
+              </li>
             </ul>
           </nav>
         </td>

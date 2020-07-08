@@ -9,10 +9,12 @@ import com.rekadanilaci.accenture.repository.ReservationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -227,6 +229,11 @@ public class OfficeManagementService {
         return entered;
     }
 
+    public Long placesInEnrollListBeforeEmployee(Long employeeId) {
+        Long position = Long.valueOf(dailyListService.getPositionInEnrollList(employeeId, office.getFreePlaces()));
+        return position;
+    }
+
 
     //========================= EXIT ENDPOINT ================================
 
@@ -312,7 +319,9 @@ public class OfficeManagementService {
 
     private Admin setEmployeeData(EmployeeRegistrationItem employeeRegistrationItem, Employee employee) {
         employee.setName(employeeRegistrationItem.getName());
-        employee.setPassword(employeeRegistrationItem.getPassword());
+        String hashedPassword = BCrypt.hashpw(employeeRegistrationItem.getPassword(), BCrypt.gensalt());
+        employee.setPassword(hashedPassword);
+
         Admin admin = adminRepository.getOne(employeeRegistrationItem.getAdminId());
         employee.setAdmin(admin);
         return admin;
@@ -387,6 +396,13 @@ public class OfficeManagementService {
         }
 
         return list;
+    }
+
+    public String getTodaysDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        LocalDate now = LocalDate.now();
+        String today = now.format(formatter);
+        return today;
     }
 
     //========================= GETTERS ================================

@@ -6,15 +6,21 @@ import {ReservationService} from "../../services/reservation.service";
 import {ActivatedRoute} from "@angular/router";
 import {ReservationItemModel} from "../../models/reservationItem.model";
 
+
 @Component({
   selector: 'app-employee-main',
   templateUrl: './employee-main.component.html',
   styleUrls: ['./employee-main.component.css']
 })
 export class EmployeeMainComponent implements OnInit {
+
   employee: EmployeeDataModel;
   newReservationForm: FormGroup;
   employeeId: number;
+  currentDateFormatted: string;
+
+
+  //position: number;
 
   constructor(private officeService: OfficeService, private reservationService: ReservationService, private activatedRoute: ActivatedRoute) {
     this.newReservationForm = new FormGroup({
@@ -26,14 +32,51 @@ export class EmployeeMainComponent implements OnInit {
     this.employee = JSON.parse(localStorage.getItem('employee'));
     this.employeeId = this.employee.id;
     this.fetchEmployeeData(this.employeeId);
-
+    this.getCurrentDate();
+    //this.getPosition(this.employeeId);
   }
 
-  deleteLeftOfficeStatusRes() {
-    let reservationList = this.employee.reservationList;
-
+  getCurrentDate() {
+    this.reservationService.getCurrentDate().subscribe(
+      date => {
+        //debugger;
+        this.currentDateFormatted = date.toString();
+        console.log(this.currentDateFormatted);
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
+
+  setEnterButtonDisabled(res: ReservationItemModel): boolean {
+    if (res.day == this.currentDateFormatted) {
+
+      //document.getElementById('enter').setAttribute('disabled', "false");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  setExitButtonDisabled(res: ReservationItemModel): boolean {
+    if (res.reservationStatus == "ENTERED_OFFICE") {
+      //document.getElementById('exit').setAttribute('disabled', "false");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /*getPosition(employeeId: number) {
+    this.officeService.getPosition(employeeId).subscribe(
+      posi => {
+        this.position = <number>posi;
+      }
+    )
+  }
+*/
   fetchEmployeeData(id: number) {
     this.officeService.fetchEmployeeData(id).subscribe(
       data => {

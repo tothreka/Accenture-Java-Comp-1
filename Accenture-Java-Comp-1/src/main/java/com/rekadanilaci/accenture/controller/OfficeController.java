@@ -83,4 +83,16 @@ public class OfficeController {
         List<ReservationListItem> all = officeService.getAllReservationFromDb();
         return new ResponseEntity(all, HttpStatus.OK);
     }
+
+    @GetMapping("/position/{employeeId}")
+    public ResponseEntity getPosition(@PathVariable Long employeeId) {
+        Long position = officeService.placesInEnrollListBeforeEmployee(employeeId);
+        return new ResponseEntity(position, HttpStatus.OK);
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity getTodaysDate() {
+        String date = officeService.getTodaysDate();
+        return new ResponseEntity(date, HttpStatus.OK);
+    }
 }

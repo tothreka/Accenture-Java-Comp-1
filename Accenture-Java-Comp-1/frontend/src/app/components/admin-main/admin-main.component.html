@@ -73,6 +73,7 @@
             formControlName="name"
             id="name"
             name="name"
+            class="form-control"
             type="text">
         </div>
         <div class="form-group">
@@ -81,9 +82,11 @@
             formControlName="password"
             id="password"
             name="password"
+            class="form-control"
             type="text">
         </div>
-        <button (click)="registerEmployee(); showEmployeeRegistration = false" class="btn-outline-info">Register
+        <button (click)="registerEmployee(); showEmployeeRegistration = false"
+                class="btn btn-outline-danger btn-rounded waves-effect">Register
           Employee
         </button>
       </form>

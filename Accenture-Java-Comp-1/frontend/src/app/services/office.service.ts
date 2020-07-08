@@ -42,4 +42,8 @@ export class OfficeService {
   updateEmployeeData(employeeData: EmployeeDataModel, employeeId: number): Observable<any> {
     return this.https.put(BASE_URL + "/employee/update/" + employeeId, employeeData);
   }
+
+  getPosition(employeeId: number) {
+    return this.https.get(BASE_URL + "/position/" + employeeId);
+  }
 }

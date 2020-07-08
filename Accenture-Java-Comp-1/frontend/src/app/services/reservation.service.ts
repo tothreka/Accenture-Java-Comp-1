@@ -46,4 +46,8 @@ export class ReservationService {
   fetchAllReservation(): Observable<any> {
     return this.https.get(BASE_URL);
   }
+
+  getCurrentDate(): Observable<any> {
+    return this.https.get(BASE_URL + "/date", {responseType: 'text'})
+  }
 }
