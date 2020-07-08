@@ -1,26 +1,70 @@
-<div class="page-container">
-  <h2>Enter as admin</h2>
-  <hr/>
-  <form [formGroup]="adminLogin">
-    <div class="form-control">
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
 
-      <label for="id">
-        Admin ID
-      </label>
-      <input
-        formControlName="id"
-        id="id"
-        name="id"
-        type="text">
-      <label for="password">
-        Password
-      </label>
-      <input
-        formControlName="password"
-        id="password"
-        name="password"
-        type="text">
-    </div>
-    <button (click)="login()" class="btn btn-primary" type="submit">Enter</button>
-  </form>
+<!-- <div class="wrapper fadeInDown">
+  <div id="formContent">
+    <-- Tabs Titles -->
+
+<!-- Icon
+<div class="fadeIn first">
+  <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon"/>
 </div>
+<h2>Enter as admin</h2>
+<hr/>
+<form [formGroup]="adminLogin">
+  <div class="form-control">
+    <input
+      formControlName="id"
+      id="id"
+      name="id"
+      type="text"
+      placeholder="ID"
+      class="fadeIn second">
+    <input
+      formControlName="password"
+      id="password"
+      name="password"
+      type="text"
+      placeholder="password"
+      class="fadeIn third">
+  </div>
+  <button (click)="login()" class="fadeIn fourth" type="submit">Enter</button>
+</form>
+</div>
+</div> --->
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <div style="padding: 20px">
+        <p class="h2">Login</p>
+        <svg class="bi bi-briefcase-fill" fill="currentColor" height="2em" viewBox="0 0 16 16" width="2em"
+             xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"
+            fill-rule="evenodd"/>
+          <path
+            d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5v1.384l-7.614 2.03a1.5 1.5 0 0 1-.772 0L0 5.884V4.5zm5-2A1.5 1.5 0 0 1 6.5 1h3A1.5 1.5 0 0 1 11 2.5V3h-1v-.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5V3H5v-.5z"
+            fill-rule="evenodd"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="adminLogin">
+      <input class="fadeIn second" formControlName="id" id="login" name="id" placeholder="ID" type="text">
+      <input class="fadeIn third" formControlName="password" id="password" name="login" placeholder="password"
+             type="password">
+      <br/>
+      <input (click)="login()" class="fadeIn fourth" type="submit" value="Log In">
+    </form>
+
+
+  </div>
+</div>
+
