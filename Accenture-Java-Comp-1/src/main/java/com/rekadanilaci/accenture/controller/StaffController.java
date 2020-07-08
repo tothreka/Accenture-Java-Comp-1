@@ -43,10 +43,10 @@ public class StaffController {
     }
 
     @PostMapping("/employee/login")
-    public ResponseEntity verifyEMployeeFromDb(@RequestBody EmployeeLoginItem employeeLoginItem) {
-        boolean exists = officeService.getEmployeeForLoginById(employeeLoginItem.getId()) != null;
+    public ResponseEntity verifyEmployeeFromDb(@RequestBody EmployeeLoginItem employeeLoginItem) {
+        boolean exists = officeService.getEmployeeForLoginById(employeeLoginItem) != null;
 
-        return new ResponseEntity(exists ? HttpStatus.OK : HttpStatus.NO_CONTENT);
+        return exists ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/employee/{id}")

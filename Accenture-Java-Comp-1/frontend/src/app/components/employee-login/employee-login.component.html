@@ -28,6 +28,7 @@
         <input class="fadeIn third" formControlName="password" id="password" name="login" placeholder="password"
                type="password">
         <br/>
+        <small *ngIf="showError">{{errorMessage}}</small>
         <input (click)="login()" class="fadeIn fourth" type="submit" value="Log In">
       </form>
 

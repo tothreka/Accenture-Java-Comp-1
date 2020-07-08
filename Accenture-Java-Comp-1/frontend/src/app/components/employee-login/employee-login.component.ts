@@ -11,6 +11,8 @@ import {Router} from "@angular/router";
 export class EmployeeLoginComponent implements OnInit {
 
   employeeLoginForm: FormGroup;
+  showError: boolean = false;
+  errorMessage: string;
 
   constructor(private officeService: OfficeService, private router: Router) {
     this.employeeLoginForm = new FormGroup({
@@ -20,6 +22,7 @@ export class EmployeeLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.errorMessage = "Incorrect password or ID. Try again or contact your admin!";
   }
 
 
@@ -35,10 +38,12 @@ export class EmployeeLoginComponent implements OnInit {
             this.router.navigate(['/employeeMain'])
           },
           error =>
-            console.log(error))
+            console.log(error));
       },
       error => {
         this.employeeLoginForm.reset();
+        // debugger;
+        this.showError = true;
         console.log(error);
       }
     )

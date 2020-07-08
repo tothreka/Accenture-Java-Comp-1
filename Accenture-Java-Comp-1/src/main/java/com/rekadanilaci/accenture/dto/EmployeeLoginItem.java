@@ -17,4 +17,8 @@ public class EmployeeLoginItem {
     public Long getId() {
         return id;
     }
+
+    public String getPassword() {
+        return password;
+    }
 }

@@ -337,11 +337,22 @@ public class OfficeManagementService {
         employeeDataItem.setReservationList(reservationDataItems);
     }
 
-    public EmployeeLoginItem getEmployeeForLoginById(Long employeeId) {
-        Employee employee = employeeRepository.getOne(employeeId);
-        EmployeeLoginItem employeeLoginItem = new EmployeeLoginItem(employee);
+    public EmployeeLoginItem getEmployeeForLoginById(EmployeeLoginItem employeeLoginItem) {
+        Long loginId = employeeLoginItem.getId();
+        String loginPassword = employeeLoginItem.getPassword();
+        Employee temp = employeeRepository.getOne(loginId);
+        boolean passwordsCheck = BCrypt.checkpw(loginPassword, temp.getPassword());
 
-        return employeeLoginItem;
+        if (temp != null) {
+            if (passwordsCheck) {
+                return employeeLoginItem;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
     }
 
     public EmployeeDataItem fetchEmployeeData(Long id) {
